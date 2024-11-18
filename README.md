@@ -5,10 +5,10 @@ dove puoi aprire delle conversazioni (delle chat, tipo canali di discord),
 sia canali che conversazioni sono a tema
 
 Canali -> macrotema
-    Conversazionni -> sub-tema
+Conversazionni -> sub-tema
 
 per scrivere nelle conversazioni devi appartenere al canale
-ver visualizzare le diverse conversazioni basta accedere anche senza fare parte
+per visualizzarle basta accedere anche senza farne parte
 
 Avviare una conversazione consiste fondamentalmente nello scrivere un post con del testo,
 si può chiudere e dopo
