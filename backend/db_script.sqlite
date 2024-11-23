@@ -1,0 +1,49 @@
+DROP DATABASE IF EXISTS meedea_db;
+CREATE DATABASE meedea_db;
+
+CREATE TABLE Users(
+userID INT PRIMARY KEY AUTOINCREMENT,
+userInfo TEXT,
+userName VARCHAR(15) UNIQUE,
+kickedUntil DATE
+);
+
+CREATE TABLE Channels(
+channelID PRIMARY KEY AUTOINCREMENT,
+channelName VARCHAR(30),
+channelDescription TEXT
+);
+
+CREATE TABLE Conversations(
+conversationID PRIMARY KEY AUTOINCREMENT,
+conversationTopic TEXT,
+originalPoster INT,  
+FOREIGN KEY (originalPoster) REFERENCES Users(userID),
+channelID INT,
+FOREIGN KEY (channelID) REFERENCES Channels(channelID)
+);
+
+CREATE TABLE Messages(
+messageID PRIMARY KEY AUTOINCREMENT,
+conversationID TEXT,
+answerToMessage INT,  
+senderUser INT,
+messageBody TEXT,
+messageTime DATETIME,
+FOREIGN KEY (senderUser) REFERENCES Users(userID),
+FOREIGN KEY (conversationID) REFERENCES Conversations(conversationID),
+FOREIGN KEY (answerToMessage) REFERENCES Messages(messageID)
+);
+
+CREATE TABLE Reports (
+reportID INT PRIMARY KEY AUTOINCREMENT,
+reporterUser INT,
+reportedUser INT,
+reportBody TEXT,
+FOREIGN KEY (reporterUser) REFERENCES Users(userID),
+FOREIGN KEY (reportedUser) REFERENCES Users(userID)
+);
+
+CREATE TABLE Notices (
+noticeID INT PRIMARY KEY AUTOINCREMENT
+);
