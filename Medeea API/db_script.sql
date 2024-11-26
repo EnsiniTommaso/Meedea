@@ -37,13 +37,46 @@ FOREIGN KEY (answerToMessage) REFERENCES Messages(messageID)
 
 CREATE TABLE Reports (
 reportID INT PRIMARY KEY AUTOINCREMENT,
-reporterUser INT,
-reportedUser INT,
+reporterUserID INT,
+reportedUserID INT,
 reportBody TEXT,
-FOREIGN KEY (reporterUser) REFERENCES Users(userID),
-FOREIGN KEY (reportedUser) REFERENCES Users(userID)
+FOREIGN KEY (reporterUserID) REFERENCES Users(userID),
+FOREIGN KEY (reportedUserID) REFERENCES Users(userID)
 );
 
 CREATE TABLE Notices (
-noticeID INT PRIMARY KEY AUTOINCREMENT
+noticeID INT PRIMARY KEY AUTOINCREMENT,
+toUserID INT,
+noticeBody TEXT,
+hasBeenRead BOOL,
+FOREIGN KEY (toUserID) REFERENCES Users(userID)
+);
+
+CREATE TABLE Blocking(
+blockerUserID INT,
+blockedUserID INT,
+FOREIGN KEY (blockerUserID) REFERENCES Users(userID),
+FOREIGN KEY (blockedUserID) REFERENCES Users(userID)
+);
+
+CREATE TABLE Friends(
+firstFriendID INT,
+secondFriendID INT,
+FOREIGN KEY (firstFriendID) REFERENCES Users(userID),
+FOREIGN KEY (secondFriendID) REFERENCES Users(userID)
+);
+
+CREATE TABLE ChannelMembers(
+channelID INT,
+userID INT,
+role TEXT,
+FOREIGN KEY (channelID) REFERENCES Channels(channelID),
+FOREIGN KEY (userID) REFERENCES Users(userID)
+);
+
+CREATE TABLE JoinRequests(
+channelID INT,
+userID INT,
+FOREIGN KEY (channelID) REFERENCES Channels(channelID),
+FOREIGN KEY (userID) REFERENCES Users(userID)
 );

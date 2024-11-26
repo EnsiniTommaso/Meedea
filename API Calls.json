@@ -23,12 +23,37 @@
   },
   "second_call":{
     "name":"GetNotices",
-    "description":"returns N, or less, notices and M, or less, unread notices of a user",
+    "description":"returns N, or less, notices of a user",
     "input:":{
       "userID":"int",
-      ""
+      "alreadyLoadedNoticesNumber":"int",
+      "requestedNoticesNumber":"int"
+    },
+    "output:":{
+      "Notices":[
+        { "body":"1st body", "read":"bool" },
+        { "body":"2nd body", "read":"bool" },
+        { "body":"...", "read":"bool" },
+        { "body":"Nth body", "read":"bool" }
+      ]
     }
-    
+  },
+  "third_call":{
+    "name":"GetChats",
+    "description":"returns last N, or less, chats of a user",
+    "input:":{
+      "userID":"int",
+      "alreadyLoadedChatsNumber":"int",
+      "requestedChatsNumber":"int"
+    },
+    "output:":{
+      "Notices":[
+        { "body":"1st body", "read":"bool" },
+        { "body":"2nd body", "read":"bool" },
+        { "body":"...", "read":"bool" },
+        { "body":"Nth body", "read":"bool" }
+      ]
+    }
   }
 
 }
