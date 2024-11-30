@@ -15,7 +15,8 @@
     "cookie-parser": "^1.4.7",
     "express": "^4.21.1",
     "firebase-admin": "^13.0.1",
-    "firebaseui": "^6.1.0"
+    "firebaseui": "^6.1.0",
+    "mysql": "^2.18.1"
   },
   "description": ""
 }

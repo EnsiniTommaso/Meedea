@@ -1,15 +1,9 @@
 import express from "express"
-
+import router from "./routers/router.js"
 
 const app = express()
 const PORT = 8080
 
-
-
-
-
-app.get("/", (req, res)=>{
-    res.send("Test nodejs ed express")
-})
+app.use(router)
 
 app.listen(PORT)
