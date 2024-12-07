@@ -1,4 +1,33 @@
-<form action="http://localhost:8080/test-query" method="post">
-  <input type="text" id="query" name="query">
-  <input type="submit" value="Submit">
-</form>
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8">
+    <title>TEST QUERIES</title>
+    <script>
+      $(document).ready(function() {
+        $('#myForm').submit(function(event) {
+          event.preventDefault(); // Impedisce il comportamento predefinito del form
+
+          var formData = $(this).serialize();
+
+          $.post($(this).attr('action'), formData, function(data) {
+            $('#responseContainer').text(data.inputText); // Visualizza solo il testo ricevuto
+          }, 'json')
+          .fail(function() {
+            console.error('Errore nella richiesta');
+          })
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Form di Esempio</h1>
+      <form id="myForm" action="http://localhost:8080/query-test" method="post">
+        <input type="text" id="inputText" name="inputText" required>
+        <button type="submit">Query</button>
+      </form>
+      <div id="responseContainer">risposta del server</div>
+    </div>
+  </body>
+</html>

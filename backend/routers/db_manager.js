@@ -15,8 +15,9 @@ connection.connect((err)=>{
   console.log('Connected!')
 })
 
-db_manager.get("/query-test", async (req,res)=>{
-  var answ = await Query('select curdate();');
+db_manager.post("/query-test", async (req,res)=>{
+  console.log(req.body)
+  var answ = { data: await Query(req) }
   console.log(answ);
   res.send(answ)
 })
