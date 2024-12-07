@@ -16,7 +16,8 @@
     "express": "^4.21.1",
     "firebase-admin": "^13.0.1",
     "firebaseui": "^6.1.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.5"
   },
   "description": ""
 }

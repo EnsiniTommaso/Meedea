@@ -6,4 +6,6 @@ const PORT = 8080
 
 app.use(router)
 
-app.listen(PORT)
+app.listen(PORT,()=>{
+  console.log(`listening on port ${PORT}`)
+})

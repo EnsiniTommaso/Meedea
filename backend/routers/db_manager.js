@@ -1,31 +1,37 @@
-import mysql from "mysql"
+import mysql2 from "mysql2"
 import db_keys from "../database_keys.json" assert { type:"json"}
 import express  from "express" 
 
 const db_manager = express.Router();
 
-const connection = mysql.createConnection({
+const connection = mysql2.createConnection({
   host: db_keys.host,
   user: db_keys.user,
-});
-
-db_manager.post("/query-test", (req,res)=>{
-  console.log(req)
-  console.log(req.body)
-  res.send(QueryTest(req.body))
+  password: db_keys.password
 })
 
-async function QueryTest (queryText){
+connection.connect((err)=>{
+  if (err) throw err
+  console.log('Connected!')
+})
 
+db_manager.get("/query-test", async (req,res)=>{
+  var answ = await Query('select curdate();');
+  console.log(answ);
+  res.send(answ)
+})
+
+async function Query (queryText){
+  
   try {
-    const [results, fields] = await connection.query(
+    const [results, fields] = await connection.promise().query(
       queryText
     );
   
-    console.log(results); // results contains rows returned by server
-    console.log(fields); // fields contains extra meta data about results, if available
+    console.log("res" + results); // results contains rows returned by server
+    console.log("fie" + fields); // fields contains extra meta data about results, if available
 
-    return "all good"
+    return results
   } catch (err) {
     console.log(err);
     return "error"

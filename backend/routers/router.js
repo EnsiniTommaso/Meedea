@@ -6,6 +6,7 @@ var router = Router();
 router.use(db_manager) 
 
 router.get("/", (req,res)=>{
+  
   res.send("dis a home page")
 })
 
