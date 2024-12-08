@@ -1,5 +1,5 @@
 import { Router } from "express";
-import  db_manager  from "./db_manager.js"
+import  db_manager  from "./dumbQuery.js"
 
 var router = Router();
 

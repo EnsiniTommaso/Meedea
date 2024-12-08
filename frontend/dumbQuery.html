@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8">
+    <title>TEST QUERIES</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Form di Esempio</h1>
+      <form id="myForm" action="http://localhost:8080/dumb-query" method="post">
+        <input type="text" id="inputText" name="inputText" value="select curdate();" required>
+        <button type="submit">Query</button>
+      </form>
+      <div id="responseContainer">risposta del server</div>
+    </div>
+  </body>
+</html>
