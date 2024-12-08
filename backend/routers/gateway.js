@@ -1,12 +1,8 @@
 import { Router } from "express";
-import  db_manager  from "./dumbQuery.js"
 
-var router = Router();
-
-router.use(db_manager) 
+const router = Router();
 
 router.get("/", (req,res)=>{
-  
   res.send("dis a home page")
 })
 

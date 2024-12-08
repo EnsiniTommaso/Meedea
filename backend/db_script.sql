@@ -1,21 +1,25 @@
+-- mysql
+
 DROP DATABASE IF EXISTS meedea_db;
 CREATE DATABASE meedea_db;
 
+USE meedea_db;
+
 CREATE TABLE Users(
-userID INT PRIMARY KEY AUTOINCREMENT,
+userID INT PRIMARY KEY AUTO_INCREMENT,
 userInfo TEXT,
 userName VARCHAR(15) UNIQUE,
 kickedUntil DATE
 );
 
 CREATE TABLE Channels(
-channelID PRIMARY KEY AUTOINCREMENT,
+channelID INT PRIMARY KEY AUTO_INCREMENT,
 channelName VARCHAR(30),
 channelDescription TEXT
 );
 
 CREATE TABLE Conversations(
-conversationID PRIMARY KEY AUTOINCREMENT,
+conversationID INT PRIMARY KEY AUTO_INCREMENT,
 conversationTopic TEXT,
 originalPoster INT,  
 FOREIGN KEY (originalPoster) REFERENCES Users(userID),
@@ -24,7 +28,7 @@ FOREIGN KEY (channelID) REFERENCES Channels(channelID)
 );
 
 CREATE TABLE Messages(
-messageID PRIMARY KEY AUTOINCREMENT,
+messageID INT PRIMARY KEY AUTO_INCREMENT,
 conversationID TEXT,
 answerToMessage INT,  
 senderUser INT,
@@ -36,7 +40,7 @@ FOREIGN KEY (answerToMessage) REFERENCES Messages(messageID)
 );
 
 CREATE TABLE Reports (
-reportID INT PRIMARY KEY AUTOINCREMENT,
+reportID INT PRIMARY KEY AUTO_INCREMENT,
 reporterUserID INT,
 reportedUserID INT,
 reportBody TEXT,
@@ -45,7 +49,7 @@ FOREIGN KEY (reportedUserID) REFERENCES Users(userID)
 );
 
 CREATE TABLE Notices (
-noticeID INT PRIMARY KEY AUTOINCREMENT,
+noticeID INT PRIMARY KEY AUTO_INCREMENT,
 toUserID INT,
 noticeBody TEXT,
 hasBeenRead BOOL,
@@ -69,7 +73,7 @@ FOREIGN KEY (secondFriendID) REFERENCES Users(userID)
 CREATE TABLE ChannelMembers(
 channelID INT,
 userID INT,
-role TEXT,
+userRole TEXT,
 FOREIGN KEY (channelID) REFERENCES Channels(channelID),
 FOREIGN KEY (userID) REFERENCES Users(userID)
 );
