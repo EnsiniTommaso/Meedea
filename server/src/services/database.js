@@ -1,5 +1,5 @@
 import mysql2 from "mysql2"
-import db_keys from "../database_keys.json" with { type:"json"}
+import db_keys from "../keys/database_keys.json" with { type:"json"}
 
 function ConnectToDB(){
   const connection = mysql2.createConnection({
