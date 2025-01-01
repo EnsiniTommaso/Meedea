@@ -1,6 +1,6 @@
 import mysql2 from "mysql2"
-import db_keys from "../database_keys.json" with { type:"json"}
-
+import db_keys from "../" with { type:"json"}
+//../keys/database_keys.json
 function ConnectToDB(){
   const connection = mysql2.createConnection({
     host: db_keys.host,

@@ -14,15 +14,15 @@ kickedUntil DATE
 
 CREATE TABLE Channels(
 channelID INT PRIMARY KEY AUTO_INCREMENT,
-channelName VARCHAR(30),
+channelName VARCHAR(30) UNIQUE,
 channelDescription TEXT
 );
 
 CREATE TABLE Conversations(
 conversationID INT PRIMARY KEY AUTO_INCREMENT,
 conversationTopic TEXT,
-originalPoster INT,  
-FOREIGN KEY (originalPoster) REFERENCES Users(userID),
+originalPosterID INT,  
+FOREIGN KEY (originalPosterID) REFERENCES Users(userID),
 channelID INT,
 FOREIGN KEY (channelID) REFERENCES Channels(channelID)
 );
@@ -31,10 +31,10 @@ CREATE TABLE Messages(
 messageID INT PRIMARY KEY AUTO_INCREMENT,
 conversationID TEXT,
 answerToMessage INT,  
-senderUser INT,
+senderUserID INT,
 messageBody TEXT,
 messageTime DATETIME,
-FOREIGN KEY (senderUser) REFERENCES Users(userID),
+FOREIGN KEY (senderUserID) REFERENCES Users(userID),
 FOREIGN KEY (conversationID) REFERENCES Conversations(conversationID),
 FOREIGN KEY (answerToMessage) REFERENCES Messages(messageID)
 );
