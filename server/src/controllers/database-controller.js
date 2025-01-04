@@ -1,28 +1,22 @@
 import mysql2 from "mysql2"
-import db_keys from "../" with { type:"json"}
-//../keys/database_keys.json
-function ConnectToDB(){
-  const connection = mysql2.createConnection({
-    host: db_keys.host,
-    user: db_keys.user,
-    password: db_keys.password,
-    database: "meedea_db"
-  })
-  connection.connect((err)=>{
-    if (err) throw err
-    console.log('Connected!')
-  })
-  return connection
-}
+import databaseConfig from '../config/database.js'
 
-async function QueryDB(connection, queryText){
-  try {
-    const [results, fields] = await connection.promise().query(queryText)
-    return [results, fields];
-  } catch (err) {
-    console.log(err);
-    return ["error",err]
+export class databaseController{
+
+  constructor(){
+    this.connection = mysql2.createConnection(databaseConfig)
+    this.connection.connect((err)=>{
+      if (err) throw err
+      console.log('Connected!')
+    })
+  }
+  async QueryDB(queryText){
+    try {
+      const [results, fields] = await this.connection.promise().query(queryText)
+      return [results, fields];
+    } catch (err) {
+      console.log(err);
+      return ["error",err]
+    }
   }
 }
-
-export { ConnectToDB, QueryDB }

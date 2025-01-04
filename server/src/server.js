@@ -1,6 +1,6 @@
 import express from "express"
 import cookieParser from "cookie-parser"
-import router from "./services/gateway.js"
+import router from "./routers/gateway.js"
 import 'dotenv/config'
 
 const app = express()
