@@ -1,8 +1,8 @@
 import express from "express"
 import { databaseController } from '../controllers/database-controller.js'
-const app = express()
+const queryTheDatabase = express()
 
-app.post("/query-db", async (req,res)=>{
+queryTheDatabase.post("/query-db", async (req,res)=>{
   console.log(req.body)
 
   const db = new databaseController()
@@ -19,4 +19,4 @@ app.post("/query-db", async (req,res)=>{
   
 })
 
-export default app
+export default queryTheDatabase

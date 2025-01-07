@@ -1,13 +1,14 @@
 import { Router } from "express";
-import queryTheDB from '../services/QueryTheDB.js'
+import queryTheDB from "../services/QueryTheDB.js";
+import signInUser from "../services/SignInUser.js";
 
 const router = Router();
 
-router.use(queryTheDB)
+router.use(signInUser);
+router.use(queryTheDB);
 
-router.get("/", (req,res)=>{
-  res.send("dis a home page")
-})
+router.get("/", (req, res) => {
+  res.send("dis a home page");
+});
 
-export default router
-
+export default router;

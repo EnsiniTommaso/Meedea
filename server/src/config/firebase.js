@@ -1,23 +1,23 @@
-
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import admin from "firebase-admin";
 
-import 'dotenv/config'
+//var serviceAccount = require("../keys/meedea-ae967-firebase-adminsdk-n7cij-619771bdc1.json");
+import "dotenv/config";
 
 const firebaseConfig = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId,
-  measurementId: process.env.measurementId,
+  apiKey: process.env.fb_apiKey,
+  authDomain: process.env.fb_authDomain,
+  projectId: process.env.fb_projectId,
+  storageBucket: process.env.fb_storageBucket,
+  messagingSenderId: process.env.fb_messagingSenderId,
+  appId: process.env.fb_appId,
+  measurementId: process.env.fb_measurementId,
 };
 
-// Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-export { app, analytics }
-
+/*
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+*/
+export { app };
