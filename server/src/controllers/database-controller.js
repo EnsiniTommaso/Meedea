@@ -16,7 +16,7 @@ export class databaseController{
       return [results, fields];
     } catch (err) {
       console.log(err);
-      return ["error",err]
+      throw err
     }
   }
 }

@@ -3,9 +3,10 @@ import cookieParser from "cookie-parser"
 import router from "./routers/gateway.js"
 import 'dotenv/config'
 
+await console.log(`Server booting on mode [${process.env.MODE || '.env not found' }]`)
+
 const app = express()
 const PORT = process.env.PORT || 8080
-
 
 app.use(express.json())
 app.use(cookieParser())
