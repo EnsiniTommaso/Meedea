@@ -1,0 +1,38 @@
+-- highest priority --
+
+get firebase to work and connect
+
+-- mid priority -- 
+
+sign-in service 
+log-in service 
+sign-in test page 
+log-in test page
+
+-- low priority --
+
+get-n-channels post/query
+get-n-channels test page
+
+join-channel post
+join-channel test page
+
+channel query
+channel test page
+
+-- to do --
+
+admin
+join requests
+notices
+conversations
+chats
+Amazon S3 for images
+friendship
+block
+reports
+
+-- particular -- 
+
+docker (or alike)
+redis (or alike)
