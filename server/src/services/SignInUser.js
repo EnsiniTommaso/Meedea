@@ -9,8 +9,8 @@ signInUser.get("/sign-in", (req, res) => {
   const email = url.searchParams.get("email");
   const password = url.searchParams.get("password");
 
-  if (!email) res.status(400).send("need email");
-  if (!password) res.status(400).send("need password");
+  if (!email) {res.status(400).send("need email"); return}
+  if (!password) {res.status(400).send("need password"); return}
 
   try {
     firebaseController.SignInNewUser(email, password);
