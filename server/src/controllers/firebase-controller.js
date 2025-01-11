@@ -1,15 +1,15 @@
-import { app } from "../config/firebase.js";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { app, getAuth, signInWithEmailAndPassword  } from "../config/firebase.js";
+
 
 class FirebaseAuthController {
   SignInNewUser(email, password) {
+
     const auth = getAuth();
-    var status = "error";
     var user = null;
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        status = "signed-in";
         user = userCredential.user;
+        console.log('registered:',user)
       })
       .catch((err) => {
         const errorCode = err.code;

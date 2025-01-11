@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nome Canale - Meedea</title>
+    <link rel="stylesheet" type="text/css" href="channel.css">
+</head>
+<body>
+
+    <header>
+        <h1>Nome Canale - Dettagli Canale</h1>
+    </header>
+
+    <div class="content">
+        <div class="channel-details">
+            <h2>Nome Canale</h2> <!-- Inserisci il nome del canale qui -->
+            <p>Descrizione del canale: Questo è un esempio di descrizione del canale, che può essere dinamica.</p> <!-- Inserisci la descrizione del canale qui -->
+            <button onclick="joinChannel('Nome Canale')" class="btn">Iscriviti al Canale</button>
+        </div>
+    </div>
+
+    <script>
+        const joinChannel = async (name) => {
+            try {
+                const response = await fetch('/join-channel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ Name: name }),
+                });
+
+                if (!response.ok) throw new Error('Errore nella risposta del server');
+
+                const result = await response.json();
+                if (result.success) {
+                    alert(`Iscrizione al canale "${name}" completata!`);
+                } else {
+                    alert(`Errore nell'iscrizione al canale "${name}".`);
+                }
+            } catch (error) {
+                console.error('Errore durante l\'iscrizione al canale:', error);
+                alert(`Errore durante l'iscrizione al canale ${name}.`);
+            }
+        };
+    </script>
+
+    <a href="/">Torna alla Home</a>
+
+</body>
+</html>

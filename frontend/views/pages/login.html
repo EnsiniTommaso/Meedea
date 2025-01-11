@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Meedea</title>
+    <link rel="stylesheet" type="text/css" href="login.css">
+</head>
+<body>
+
+    <header>
+        <h1>Login</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profilo</a>
+        <a href="signin.html">Iscriviti</a>
+        <a href="login.html">Accedi</a>
+    </nav>
+
+    <div class="form-container">
+        <form action="/login" method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required placeholder="Inserisci il tuo username">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Inserisci la tua password">
+
+            <button type="submit">Accedi</button>
+        </form>
+
+        <p>Non hai un account? <a href="/signin">Registrati qui</a></p>
+    </div>
+
+</body>
+</html>
