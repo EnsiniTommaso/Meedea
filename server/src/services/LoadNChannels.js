@@ -1,5 +1,5 @@
 import express from "express";
-import databaseController from "../controllers/database-controller.js";
+import QueryDB from "../controllers/database-controller.js";
 const loadNChannels = express();
 
 loadNChannels.post("/load-n-channels", async (req, res) => {
@@ -12,10 +12,9 @@ loadNChannels.post("/load-n-channels", async (req, res) => {
     return;
   }
 
-  databaseController
-    .QueryDB(
-      `SELECT channelname, channelid FROM channels  ORDER BY channelid LIMIT ${req.body.RequestedNumber} OFFSET ${req.body.AlreadyLoadedNumber} `
-    )
+  QueryDB(
+    `SELECT channelname, channelid FROM channels  ORDER BY channelid LIMIT ${req.body.RequestedNumber} OFFSET ${req.body.AlreadyLoadedNumber} `
+  )
     .then((answ) => {
       console.log(answ);
       res.status(200).json(answ[0]);

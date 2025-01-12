@@ -1,17 +1,15 @@
+
 -- highest priority --
 
-get firebase to work and connect
+refractor database-controller
 
 -- mid priority -- 
 
-sign-in service 
-log-in service 
 sign-in test page 
 log-in test page
 
 -- low priority --
 
-get-n-channels post/query
 get-n-channels test page
 
 join-channel post
@@ -36,3 +34,10 @@ reports
 
 docker (or alike)
 redis (or alike)
+
+-- done --
+
+get firebase to work and connect
+sign-in service
+log-in service 
+get-n-channels post/query
