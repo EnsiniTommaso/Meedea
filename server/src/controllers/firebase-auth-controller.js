@@ -28,8 +28,8 @@ async function CreateNewUser(email, password) {
 }
 
 async function LogInUser(email, password) {
-  if (!email) return console.error("[ERROR] LogInUser: need email");
-  if (!password) return console.error("[ERROR] LogInUser: need password");
+  if (!email) return [null, '[ERROR] LogInUser: need email'];
+  if (!password) return [null, '[ERROR] LogInUser: need password'];
 
   const auth = getAuth(app);
   try {
@@ -39,12 +39,12 @@ async function LogInUser(email, password) {
       password
     );
     const user = userCredential.user;
-    return user;
+    return [user, null];
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
     console.error(`[${errorCode}] ${errorMessage}`);
-    return null;
+    return [null, errorCode];
   }
 }
 
