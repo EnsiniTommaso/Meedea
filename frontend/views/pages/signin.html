@@ -5,47 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione - Meedea</title>
     <link rel="stylesheet" type="text/css" href="signin.css">
-    <script type ="module" >
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js'
-        import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js'
-
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-            apiKey: "AIzaSyDXSV_r4OxeR1e2KDOiK836jVyyCFavIkU",
-            authDomain: "meedea-ae967.firebaseapp.com",
-            projectId: "meedea-ae967",
-            storageBucket: "meedea-ae967.firebasestorage.app",
-            messagingSenderId: "364168367291",
-            appId: "1:364168367291:web:415d43558fa55c634d6d9e",
-            measurementId: "G-MM4RG84S0B"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-
-        document.getElementById("btn-submit").addEventListener("click", () => {
-            var email = document.getElementById('email').value
-            var password = document.getElementById('password').value
-            console.log(email, password)
-            const auth = getAuth()
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user
-                    console.log("user joind seucc: ", user)
-                })
-                .catch((error) => {
-                    const errorCode = error.code
-                    const errorMessage = error.message
-                    console.error(`[${errorCode}] ${errorMessage}`)
-                })
-        })
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-    
-
-    </script>
 </head>
 <body>
 

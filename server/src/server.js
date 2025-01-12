@@ -1,6 +1,5 @@
 import express from "express";
 import router from "./routers/gateway.js";
-import firebaseController from "./controllers/firebase-controller.js";
 import "dotenv/config";
 
 await console.log(
@@ -14,10 +13,6 @@ app.use(express.json());
 
 app.use(router);
 
-firebaseController.SignInNewUser("tommaso.ensini@gmail.it","mariopsw")
-
-
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
-
