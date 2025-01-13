@@ -1,6 +1,6 @@
 import express from "express";
 import { CreateNewUser } from "../controllers/firebase-auth-controller.js";
-import QueryDB from "../controllers/database-controller.js";
+import { QueryDB } from "../controllers/database-controller.js";
 
 const createNewUser = express();
 

@@ -1,5 +1,5 @@
 import express from "express";
-import QueryDB from "../controllers/database-controller.js";
+import { QueryDB } from "../controllers/database-controller.js";
 const queryTheDatabase = express();
 
 queryTheDatabase.post("/query-db", async (req, res) => {

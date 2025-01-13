@@ -1,5 +1,5 @@
 import express from "express";
-import QueryDB from "../controllers/database-controller.js";
+import { QueryDB } from "../controllers/database-controller.js";
 const loadNChannels = express();
 
 loadNChannels.post("/load-n-channels", async (req, res) => {

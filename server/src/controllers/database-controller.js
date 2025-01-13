@@ -10,11 +10,16 @@ connection.connect((err) => {
 
 async function QueryDB(queryText) {
   try {
-    const [results, fields] = await this.connection.promise().query(queryText);
+    const [results, fields] = await connection.promise().query(queryText);
     return [results, fields, error];
   } catch (err) {
     throw [null, null, `[${err.code}] ${err.sqlMessage}`];
   }
 }
 
-export default QueryDB;
+async function QueryNChannelsWithOffset(limit, offset){
+  connection.query(`SELECT channelname, channelid FROM channels  ORDER BY channelid LIMIT ${limit} OFFSET ${offset}`)
+}
+
+
+export {QueryNChannelsWithOffset, QueryDB};
