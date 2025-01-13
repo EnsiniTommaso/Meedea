@@ -1,5 +1,8 @@
 import 'dotenv/config'
 
+if (!process.env.MODE)
+  console.error('[ERROR] .env not found')
+
 const db_config = {
   host: process.env.db_host,
   user: process.env.db_user,

@@ -6,8 +6,10 @@ queryTheDatabase.post("/query-db", async (req, res) => {
   console.log(req.body);
 
   QueryDB("SELECT CURRENT_USER();")
-    .then(([results, fields, error]) => {
-      if (error) return;
+    .then(([results,fields, error]) => {
+
+      if (error) return res.status(500);
+
       console.log(answ);
       res.json(results);
     })

@@ -12,6 +12,9 @@ import "dotenv/config";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+if (!process.env.MODE)
+  console.error('[ERROR] .env not found')
+
 const firebaseConfig = {
   apiKey: process.env.fb_apiKey,
   authDomain: process.env.fb_authDomain,
