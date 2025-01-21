@@ -3,19 +3,13 @@ import { QueryDB } from "../controllers/database-controller.js";
 const queryTheDatabase = express();
 
 queryTheDatabase.post("/query-db", async (req, res) => {
-  console.log(req.body);
-
   QueryDB("SELECT CURRENT_USER();")
-    .then(([results,fields, error]) => {
-
-      if (error) return res.status(500);
-
-      console.log(answ);
-      res.json(results);
+    .then((results) => {
+      res.status(200).json(results);
     })
     .catch((err) => {
-      console.log(err);
-      res.json({ error: toString(err) });
+      console.error(`[ERR] QueryTheDB: ${err}`)
+      res.status(500).json({ error: toString(err) })
     });
 });
 

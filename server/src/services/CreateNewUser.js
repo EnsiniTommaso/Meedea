@@ -12,23 +12,26 @@ createNewUser.post("/sign-in", async (req, res) => {
   const username = req.body.username;
 
 
-  if (!email) return res.status(400).send("Bad Request, need email");
-  if (!password) return res.status(400).send("Bad Request, need password");
-  if (!username) return res.status(400).send("Bad Request, need username");
+  if (!email) return res.status(400).send("Bad Request, need email")
+  if (!password) return res.status(400).send("Bad Request, need password")
+  if (!username) return res.status(400).send("Bad Request, need username")
 
   const [user, errorCode] = await CreateNewUser(email, password);
 
   if (errorCode) {
-    res.status(500).send(`${errorCode}`);
-    return;
+    console.error(`[ERR] createNewUser -> post -> /sign-in -> CreateNewUser : ${errorCode}`)
+    res.status(500).json({error:`${errorCode}`})
+    return
   }
 
-  const error = AddUserWithUserName(username)
-  if (error){
-    res.status(500).send("internal server error");
-  } else {
-    res.status(201).send("User Created Sucsessfully");
-  }
+  AddUserWithUserName(username)
+  .then(() => {
+    res.status(201).send("User Created Sucsessfully")
+  })
+  .catch((err) => {
+    console.error(`[ERR] createNewUser -> post -> /sign-in -> AddUserWithUserName : ${err}`)
+    res.status(500).json({error:"internal server error"})
+  })
 });
 
 export default createNewUser;

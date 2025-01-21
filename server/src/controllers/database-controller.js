@@ -13,9 +13,9 @@ connection.connect((err) => {
 async function QueryDB(queryText) {
   try {
     const [results, fields] = await connection.promise().query(queryText);
-    return [results, fields, null];
-  } catch (err) {
-    return [null, null, `[${err.code}] ${err.sqlMessage}`];
+    return results
+  } catch (error) {
+   throw `${error.code}`
   }
 }
 
@@ -24,18 +24,17 @@ async function QueryNChannelsWithOffset(limit, offset){
     const [results, fields] = await connection.promise().query(`SELECT channelname, channelid FROM channels  ORDER BY channelid LIMIT ${limit} OFFSET ${offset}`)
     return [ results, null ]
   } catch (error){
-    return [null, `[${error.code}] ${error.sqlMessage}` ]
+    return [null, `[${error.code}] ${error.message}` ]
   }
 }
 
 async function AddUserWithUserName(username){
   try {
-    const [results, fields] = await connection.promise().query( `insert into users (userName) values (${username});`)
-    return null
+    const [results, fields] = await connection.promise().query( `insert into users (userName) values ('${username}');`)
+    return
   } catch (err) {
-    return `${err.code}`
+    throw `${err.code}, ${err.message}`
   }
 }
-
 
 export {QueryNChannelsWithOffset, QueryDB, AddUserWithUserName};

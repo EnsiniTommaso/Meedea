@@ -1,14 +1,19 @@
 
 -- highest priority --
 
-refractor database-controller
+deeper look into (meaning copy code from)  https://github.com/firebase/snippets-node/blob/e29c2c3ced6c1a3cb14ad5ab7588dac578c06453/auth/manage_users.js
+remove fb user 
+remove db user 
+
 
 -- mid priority -- 
 
-sign-in test page 
-log-in test page
+implement direct messages with socket.io
 
 -- low priority --
+
+sign-in test page 
+log-in test page
 
 get-n-channels test page
 
@@ -41,3 +46,4 @@ get firebase to work and connect
 sign-in service
 log-in service 
 get-n-channels post/query
+refractor database-controller
