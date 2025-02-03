@@ -38,8 +38,8 @@ async function LogInUser(email, password) {
       email,
       password
     );
-    const user = userCredential.user;
-    return [user, null];
+    const IdToken = userCredential.user.getIdToken();
+    return [IdToken, null];
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;

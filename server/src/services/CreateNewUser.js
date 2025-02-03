@@ -23,15 +23,14 @@ createNewUser.post("/sign-in", async (req, res) => {
     res.status(500).json({error:`${errorCode}`})
     return
   }
-
-  AddUserWithUserName(username)
-  .then(() => {
+  
+  try {
+    await AddUserWithUserName(username)
     res.status(201).send("User Created Sucsessfully")
-  })
-  .catch((err) => {
+  } catch(err){
     console.error(`[ERR] createNewUser -> post -> /sign-in -> AddUserWithUserName : ${err}`)
     res.status(500).json({error:"internal server error"})
-  })
+  }
 });
 
 export default createNewUser;
