@@ -1,6 +1,6 @@
 import express from "express";
-import { QueryDB } from "./database.js";
-
+import { conversations } from "./database.js";
+import 'dotenv/config'
 const app = express();
 
 // get unread notices of a user
@@ -27,4 +27,4 @@ app.post("/postcomment", () => {});
 // add new unread notice to user
 app.post("/addnotice", () => {});
 
-app.listen(7000, "0.0.0.0", () => console.log("channels listening at 7000"));
+app.listen(process.env.PORT , "0.0.0.0", () => console.log("channels listening at",process.env.PORT));

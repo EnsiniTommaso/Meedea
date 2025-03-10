@@ -9,6 +9,6 @@ RUN npm install
 # copia il resto dell'applicazione
 COPY . .
 # Espone la porta su cui il server Node.js sarà in ascolto
-EXPOSE 7000
+EXPOSE 7070
 # Comando per avviare l'applicazione
 CMD ["node", "users.js"]

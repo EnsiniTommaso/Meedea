@@ -1,7 +1,7 @@
 # Usa un'immagine base di Node.js
 FROM node:22
 # Imposta la directory di lavoro nel container
-WORKDIR /channels
+WORKDIR /frontend
 # Copia i file package.json e package-lock.json
 COPY package*.json ./
 # Installa le dipendenze
@@ -9,6 +9,6 @@ RUN npm install
 # copia il resto dell'applicazione
 COPY . .
 # Espone la porta su cui il server Node.js sarà in ascolto
-EXPOSE 5050
+EXPOSE 3000
 # Comando per avviare l'applicazione
-CMD ["node", "channels.js"]
+CMD ["npm", "run", "dev"]

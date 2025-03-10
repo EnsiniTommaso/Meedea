@@ -4,20 +4,22 @@ services:
       # nome cartella
       context: ./channels
     ports:
-      - "5000:5000"
-    volumes:
-      - ./channels
+      - "5050:5050"
   gateway:
     build:
       # nome cartella
       context: ./gateway
     ports:
-      - "6000:6000"
+      - "6060:6060"
   users:
     build:
       # nome cartella
       context: ./users
     ports:
-      - "7000:7000"
-    volumes:
-      - ./users
+      - "7070:7070"
+  frontend:
+    build:
+      # nome cartella
+      context: ./frontend
+    ports:
+      - "3000:3000"
