@@ -1,0 +1,23 @@
+services:
+  channels:
+    build:
+      # nome cartella
+      context: ./channels
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./channels
+  gateway:
+    build:
+      # nome cartella
+      context: ./gateway
+    ports:
+      - "6000:6000"
+  users:
+    build:
+      # nome cartella
+      context: ./users
+    ports:
+      - "7000:7000"
+    volumes:
+      - ./users

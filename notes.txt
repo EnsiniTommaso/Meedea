@@ -1,0 +1,4 @@
+frontend p 3000
+channels p 5050
+gateway p 6060
+users p 7070
