@@ -1,7 +1,7 @@
 # Usa un'immagine base di Node.js
 FROM node:22
 # Imposta la directory di lavoro nel container
-WORKDIR /users
+WORKDIR /firebase
 # Copia i file package.json e package-lock.json
 COPY package*.json ./
 # Installa le dipendenze
@@ -11,4 +11,4 @@ COPY . .
 # Espone la porta su cui il server Node.js sarà in ascolto
 EXPOSE 7070
 # Comando per avviare l'applicazione
-CMD ["node", "users.js"]
+CMD ["node", "app.js"]

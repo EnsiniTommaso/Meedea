@@ -2,7 +2,7 @@ services:
   channels:
     build:
       # nome cartella
-      context: ./channels
+      context: ./database
     ports:
       - "5050:5050"
   gateway:
@@ -14,7 +14,7 @@ services:
   users:
     build:
       # nome cartella
-      context: ./users
+      context: ./firebase
     ports:
       - "7070:7070"
   frontend:

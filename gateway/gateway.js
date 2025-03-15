@@ -11,9 +11,9 @@ app.use(cors()); // Utilizza il middleware cors
 /*Js non rispecchia criteri di sicurezza quindi molti servizi richiedono
 una garanzia per gestire chiamate limitate in numero - ruolo di cors*/
 
+console.log('mode:', process.env.MODE);
 
 
-
-app.listen(process.env.PORT, process.env.IP || nip, () => {
-  console.log(`Gateway running at http://localhost:${process.env.PORT}`);
+app.listen(process.env.PORT, nip, () => {
+  console.log(`Gateway running at port ${process.env.PORT}`);
 });
