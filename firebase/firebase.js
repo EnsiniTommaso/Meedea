@@ -68,4 +68,5 @@ async function RemoveUser(){
   //https://github.com/firebase/snippets-node/blob/e29c2c3ced6c1a3cb14ad5ab7588dac578c06453/auth/manage_users.js
 }
 
+console.log(process.env.MODE)
 export { CreateNewUser, LogInUser };

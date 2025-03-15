@@ -5,10 +5,10 @@ if (!process.env.MODE) console.error("[ERROR] .env not found");
 else console.log(process.env.MODE);
 
 const db_config = {
-  user: process.env.user,
-  password: process.env.password,
-  database: process.env.database,
-  host: process.env.host,
+  user: process.env.db_user,
+  password: process.env.db_password,
+  database: process.env.db_database,
+  host: process.env.db_host,
 };
 
 const connection = mysql2.createConnection(db_config);

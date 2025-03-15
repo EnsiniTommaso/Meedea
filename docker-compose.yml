@@ -1,17 +1,17 @@
 services:
-  channels:
+  database:
     build:
       # nome cartella
       context: ./database
     ports:
-      - "5050:5050"
+      - "4040:4040"
   gateway:
     build:
       # nome cartella
       context: ./gateway
     ports:
       - "6060:6060"
-  users:
+  firebase:
     build:
       # nome cartella
       context: ./firebase
