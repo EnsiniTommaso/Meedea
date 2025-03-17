@@ -1,10 +1,16 @@
 services:
+  mysqldb:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: burbero2025
   database:
     build:
       # nome cartella
       context: ./database
     ports:
       - "4040:4040"
+
   gateway:
     build:
       # nome cartella

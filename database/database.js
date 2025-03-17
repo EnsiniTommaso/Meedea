@@ -11,15 +11,18 @@ const db_config = {
   host: process.env.db_host,
 };
 
-const connection = mysql2.createConnection(db_config);
 
-connection.connect((err) => {
-  if (err) console.error(`[${err.code}] ${err.message}`);
-  else console.log("Connected!");
-});
 
 // get unread notices of a user
 async function notices(user) {
+
+  const connection = mysql2.createConnection(db_config);
+
+  connection.connect((err) => {
+    if (err) console.error(`[${err.code}] ${err.message}`);
+    else console.log("Connected!");
+  });
+
   try {
     const [results, fields] = await connection
       .promise()
@@ -29,12 +32,22 @@ async function notices(user) {
       results,
     };
   } catch (err) {
+    connection.end()
     throw `${err.code}, ${err.message}`;
   }
+  connection.end()
 }
 
 // get n channels with m offset
 async function channels(limit, offset) {
+  
+  const connection = mysql2.createConnection(db_config);
+
+  connection.connect((err) => {
+    if (err) console.error(`[${err.code}] ${err.message}`);
+    else console.log("Connected!");
+  });
+
   try {
     const [results, fields] = await connection
       .promise()
@@ -45,12 +58,22 @@ async function channels(limit, offset) {
       results,
     };
   } catch (error) {
+    connection.end()
     return [null, `[${error.code}] ${error.message}`];
   }
+  connection.end()
 }
 
 // get n conversations with m offset in channel
 async function conversations(channelid, limit, offset) {
+  
+  const connection = mysql2.createConnection(db_config);
+
+  connection.connect((err) => {
+    if (err) console.error(`[${err.code}] ${err.message}`);
+    else console.log("Connected!");
+  });
+
   try {
     const [results, fields] = await connection
       .promise()
@@ -59,12 +82,24 @@ async function conversations(channelid, limit, offset) {
       );
     var answ = { results };
   } catch (error) {
+    connection.end()
     return [null, `[${error.code}] ${error.message}`];
   }
+  connection.end()
 }
 
 // get comments of a conversation
 async function comments() {
+
+
+  const connection = mysql2.createConnection(db_config);
+
+  connection.connect((err) => {
+    if (err) console.error(`[${err.code}] ${err.message}`);
+    else console.log("Connected!");
+  });
+
+
   try {
     const [results, fields] = await connection
       .promise()
@@ -73,8 +108,10 @@ async function comments() {
       );
     var answ = { results };
   } catch (error) {
+    connection.end()
     return [null, `[${error.code}] ${error.message}`];
   }
+  connection.end()
 }
 
 // create new channel

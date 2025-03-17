@@ -14,7 +14,9 @@ una garanzia per gestire chiamate limitate in numero - ruolo di cors*/
 
 console.log('mode:', process.env.MODE);
 
-
+app.get('/', async (res, req)=>{
+  axios.get()
+})
 app.listen(process.env.PORT, nip, () => {
   console.log(`Gateway running at port ${process.env.PORT}`);
 });
