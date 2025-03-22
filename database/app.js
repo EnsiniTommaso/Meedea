@@ -1,15 +1,27 @@
 import express from "express";
-import { conversations } from "./database.js";
+import { run,test } from "./database.js";
 import 'dotenv/config'
+
 const app = express();
+
+app.use((req,res,next)=>{
+  console.log(req.path)
+  return next()
+})
+
+app.get('/',(req,res)=>{
+  test().then(console.log)
+  .catch(console.error)
+  
+})
 
 // get unread notices of a user
 app.get("/notices", () => {});
 
-// get n channels with m offset
+// get channels
 app.post("/channels", () => {});
 
-// get n conversations with m offset in channel
+// get conversations of a channel
 app.post("/conversations", () => {});
 
 // get comments of a conversation

@@ -1,135 +1,73 @@
-import mysql2 from "mysql2";
-import "dotenv/config";
+import mongoose from "mongoose";
+import user from './models/user.js'
+import notice from "./models/notice.js";
+import 'dotenv/config'
+const uri = process.env.mongo_connect_string;
 
-if (!process.env.MODE) console.error("[ERROR] .env not found");
-else console.log(process.env.MODE);
-
-const db_config = {
-  user: process.env.db_user,
-  password: process.env.db_password,
-  database: process.env.db_database,
-  host: process.env.db_host,
-};
-
+mongoose.connect(process.env.mongo_connect_string);
 
 
 // get unread notices of a user
-async function notices(user) {
+export async function  notices (){}
 
-  const connection = mysql2.createConnection(db_config);
+// get channels
+export async function  channels (){}
 
-  connection.connect((err) => {
-    if (err) console.error(`[${err.code}] ${err.message}`);
-    else console.log("Connected!");
-  });
-
-  try {
-    const [results, fields] = await connection
-      .promise()
-      .query(`select * from notices where username = ${user} and read = false`);
-
-    var answ = {
-      results,
-    };
-  } catch (err) {
-    connection.end()
-    throw `${err.code}, ${err.message}`;
-  }
-  connection.end()
-}
-
-// get n channels with m offset
-async function channels(limit, offset) {
-  
-  const connection = mysql2.createConnection(db_config);
-
-  connection.connect((err) => {
-    if (err) console.error(`[${err.code}] ${err.message}`);
-    else console.log("Connected!");
-  });
-
-  try {
-    const [results, fields] = await connection
-      .promise()
-      .query(
-        `SELECT * FROM channels ORDER BY channelid LIMIT ${limit} OFFSET ${offset}`
-      );
-    var answ = {
-      results,
-    };
-  } catch (error) {
-    connection.end()
-    return [null, `[${error.code}] ${error.message}`];
-  }
-  connection.end()
-}
-
-// get n conversations with m offset in channel
-async function conversations(channelid, limit, offset) {
-  
-  const connection = mysql2.createConnection(db_config);
-
-  connection.connect((err) => {
-    if (err) console.error(`[${err.code}] ${err.message}`);
-    else console.log("Connected!");
-  });
-
-  try {
-    const [results, fields] = await connection
-      .promise()
-      .query(
-        `SELECT * FROM conversations  ORDER BY conversationsid where channelid = ${channelid} LIMIT ${limit} OFFSET ${offset}`
-      );
-    var answ = { results };
-  } catch (error) {
-    connection.end()
-    return [null, `[${error.code}] ${error.message}`];
-  }
-  connection.end()
-}
+// get conversations of a channel
+export async function  conversations (){}
 
 // get comments of a conversation
-async function comments() {
-
-
-  const connection = mysql2.createConnection(db_config);
-
-  connection.connect((err) => {
-    if (err) console.error(`[${err.code}] ${err.message}`);
-    else console.log("Connected!");
-  });
-
-
-  try {
-    const [results, fields] = await connection
-      .promise()
-      .query(
-        `SELECT * FROM comments  ORDER BY commentid where conversationid = ${channelid} LIMIT ${limit} OFFSET ${offset}`
-      );
-    var answ = { results };
-  } catch (error) {
-    connection.end()
-    return [null, `[${error.code}] ${error.message}`];
-  }
-  connection.end()
-}
+export async function  comments (){}
 
 // create new channel
-async function newchannel(user, name, topic) {}
+export async function  newchannel (){}
 
 // start new conversation
-async function startconversation(channel, title, text, user) {}
+export async function startconversation (){}
 
 // post comment
-async function postcomment(conversation, answertocomment, content) {}
+export async function postcomment(discussionID, content, answerToComment, posterID) {
+  const newComment = new notice({
+    discussionID: discussionID,
+    content: content,
+    answerToComment: answerToComment,
+    posterID: posterID
+  });
+  await newComment.save();
+}
 
 // add new unread notice to user
-async function addnotice(user, body){
-
+export async function  addnotice (content, userID){
+  const newComment = new notice({
+    content: content,
+    userID: userID,
+  });
+  await newNotice.save();
 }
 
-// set user notices as read
-async function readnotices(user, body){
+export async function  test(){
 
+    // Use connect method to connect to the server
+    await client.connect();
+    console.log("Connected successfully to server");
+    const db = client.db(process.env.mongo_database);
+    const collection = db.collection("documents");
+    
+    
+    
+    var newuser = new user({
+      name:'mario giordano',
+      email:'mario@giordano.gg'
+    })
+
+    await newuser.save()
+
+
+    // the following code examples can be pasted here...
+
+    return "done.";
+  
 }
-export { notices, channels, conversations, comments, newchannel, startconversation, postcomment, addnotice, readnotices }
+
+
+
