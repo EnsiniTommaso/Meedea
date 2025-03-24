@@ -1,5 +1,5 @@
 import express from "express";
-import * as database from "./database.js";
+import * as db from "./database.js";
 import "dotenv/config";
 import notice from "./models/notice.js";
 
@@ -15,10 +15,10 @@ app.get("/", (req, res) => {
 });
 
 // get unread notices of a user
-app.get("/notices", async (req, res) => {
-  var name = req.userID;
-  var notices = await database.unreadnotices(userID);
-  return notices;
+app.post("/notices", async (req, res) => {
+  var userID = req.userID;
+  var notices = await db.unreadnotices(userID);
+  res.json(notices);
 });
 
 // get all channels a user didn't join
