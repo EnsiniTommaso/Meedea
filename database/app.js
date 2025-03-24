@@ -1,37 +1,43 @@
 import express from "express";
-import { run,test } from "./database.js";
-import 'dotenv/config'
+import * as database from "./database.js";
+import "dotenv/config";
+import notice from "./models/notice.js";
 
 const app = express();
 
-app.use((req,res,next)=>{
-  console.log(req.path)
-  return next()
-})
+app.use((req, res, next) => {
+  console.log(req.path);
+  return next();
+});
 
-app.get('/',(req,res)=>{
-  test().then(console.log)
-  .catch(console.error)
-  
-})
+app.get("/", (req, res) => {
+  test().then(console.log).catch(console.error);
+});
 
 // get unread notices of a user
-app.get("/notices", () => {});
+app.get("/notices", async (req, res) => {
+  var name = req.userID;
+  var notices = await database.unreadnotices(userID);
+  return notices;
+});
 
-// get channels
-app.post("/channels", () => {});
+// get all channels a user didn't join
+app.post("/channels", (req, res) => {});
 
-// get conversations of a channel
-app.post("/conversations", () => {});
+// get all channels a user joined
+app.post("/joined-channels", (req, res) => {});
 
-// get comments of a conversation
+// get discussions of a channel
+app.post("/discussions", () => {});
+
+// get comments of a discussion
 app.post("/comments", () => {});
 
 // create new channel
 app.post("/newchannel", () => {});
 
-// start new conversation
-app.post("/startconversation", () => {});
+// start new discussion
+app.post("/startdiscussion", () => {});
 
 // post comment
 app.post("/postcomment", () => {});
@@ -39,4 +45,6 @@ app.post("/postcomment", () => {});
 // add new unread notice to user
 app.post("/addnotice", () => {});
 
-app.listen(process.env.PORT , "0.0.0.0", () => console.log("channels listening at",process.env.PORT));
+app.listen(process.env.PORT, "0.0.0.0", () =>
+  console.log("channels listening at", process.env.PORT)
+);
