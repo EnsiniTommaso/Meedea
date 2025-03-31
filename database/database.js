@@ -116,7 +116,6 @@ export async function newuser(name, email, firebaseID) {
 }
 
 // make a user join a channel
-export async function join(userID, channelID) {
-   
-}
+export async function join(userID, channelID) {}
 
+//get user through username

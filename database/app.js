@@ -2,6 +2,7 @@ import express from "express";
 import * as db from "./database.js";
 import "dotenv/config";
 import notice from "./models/notice.js";
+import user from "./models/user.js";
 
 const app = express();
 
@@ -22,7 +23,17 @@ app.post("/notices", async (req, res) => {
 });
 
 // get all channels a user didn't join
-app.post("/channels", (req, res) => {});
+app.post("/channels", async (req, res) => {
+  var userID = req.body.userID;
+  var answ;
+  try {
+    answ = await db.channels(userID);
+    res.status(200).json({ channels: answ });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 // get all channels a user joined
 app.post("/joined-channels", (req, res) => {});

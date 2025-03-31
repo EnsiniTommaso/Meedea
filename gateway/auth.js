@@ -12,15 +12,15 @@ for (const key in body) {
 }
 
 async function CheckIdToken(req, res, next) {
+  console.log(req.path, Date.now());
   const IdToken = req.get("id-token");
 
   if (req.path == "/log-in") return next();
 
+  if (!IdToken) return res.status(400);
+
   try {
     const [header, payload] = parseJwt(IdToken);
-
-    console.log(header);
-    console.log(payload);
 
     var date = new Date().getTime() / 1000;
 
@@ -34,24 +34,52 @@ async function CheckIdToken(req, res, next) {
 
     var valid = true;
 
-    if (header.alg != "RS256") valid = false;
-    else if (!keys.includes(header.kid)) valid = false;
-    else if (!exp) valid = false;
-    else if (!iat) valid = false;
-    else if (!aud) valid = false;
-    else if (!iss) valid = false;
-    else if (!sub) valid = false;
-    else if (!auth_time) valid = false;
-    else if (!user_id) valid = false;
-    else if (exp < date) valid = false;
-    else if (iat > date) valid = false;
-    else if (auth_time > date) valid = false;
-    else if (aud != process.env.fb_projectId) valid = false;
-    else if (
-      iss != `https://securetoken.google.com/${process.env.fb_projectId}`
-    )
+    if (header.alg != "RS256") {
       valid = false;
-
+      console.log("alg");
+    } else if (!keys.includes(header.kid)) {
+      valid = false;
+      console.log("kid");
+    } else if (!exp) {
+      valid = false;
+      console.log("exp");
+    } else if (!iat) {
+      valid = false;
+      console.log("iat");
+    } else if (!aud) {
+      valid = false;
+      console.log("aud");
+    } else if (!iss) {
+      valid = false;
+      console.log("iss");
+    } else if (!sub) {
+      valid = false;
+      console.log("sub");
+    } else if (!auth_time) {
+      valid = false;
+      console.log("auth_time");
+    } else if (!user_id) {
+      valid = false;
+      console.log("user_id");
+    } else if (exp < date) {
+      valid = false;
+      console.log("exp<date");
+    } else if (iat > date) {
+      valid = false;
+      console.log("iat>date");
+    } else if (auth_time > date) {
+      valid = false;
+      console.log("auth_time>date");
+    } else if (aud != process.env.fb_projectId) {
+      valid = false;
+      console.log("aud 2", aud);
+    } else if (
+      iss != `https://securetoken.google.com/${process.env.fb_projectId}`
+    ) {
+      valid = false;
+      console.log("iss != ");
+    }
+    console.log("valid", valid);
     if (!valid) return res.status(500).json({ error: "bad request token" });
 
     return next();
@@ -59,6 +87,7 @@ async function CheckIdToken(req, res, next) {
     console.error(err);
     return;
   }
+  res.send("error");
 }
 
 function parseJwt(token) {
