@@ -87,7 +87,7 @@ async function CheckIdToken(req, res, next) {
     console.error(err);
     return;
   }
-  res.send("error");
+  
 }
 
 function parseJwt(token) {

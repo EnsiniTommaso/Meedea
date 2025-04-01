@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import "dotenv/config";
+import { newuser } from "../database/database";
 
 const firebaseConfig = {
   apiKey: process.env.fb_apiKey,
@@ -55,7 +56,7 @@ async function LogInUser(email, password) {
     )
     const newUser = await userCredential
     const IdToken = newUser.user.getIdToken();
-    return [IdToken, null];
+    return [{idtoken:IdToken, uid:newUser.user.uid}, null];
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;

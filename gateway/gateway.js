@@ -1,5 +1,5 @@
 import express from "express";
-import bodyParser from "body-parser";
+import bodyParser, { json } from "body-parser";
 import axios from "axios";
 import "dotenv/config";
 import auth from "./auth.js";
@@ -21,31 +21,54 @@ app.get("/channels", async (req, res) => {
 
   var user_id = req.get("user-db-id");
 
-  if (!user_id) return res.status(400).statusMessage("user-db-id");
+  if (!user_id) return res.status(400).send("missing user-db-id");
 
-  var channels = await axios.post("http://localhost:4040/channels", {
+  var channels = await axios.post(`${process.env.database_addr}/channels`, {
     userID: user_id,
   });
+
+
   if (channels) res.status(200).json(channels);
 });
 
 app.post("/log-in", async (req, res) => {
-  if (!req.body.password || !req.body.email) return res.status(400);
+
+  var response = {}
+
+  if (!req.body.password || !req.body.email || !req.body.username) return res.status(400);
   console.log(req.body);
 
   try {
-    var login = await axios.post("http://localhost:7070/log-in", {
+    var login = await axios.post(`${process.env.firebase_addr}/log-in`, {
       email: req.body.email,
       password: req.body.password,
     });
 
     if (login.error) return res.status(400).send({ error: login.error });
 
-    res.send(login.data);
+    answ['id-token']=login.data.idtoken;
+    answ['uid']=login.data.uid
   } catch (err) {
     console.error(err.code);
-    return res.status(400).send({ error: "error" });
+    return res.status(400).send({ error: err.code });
   }
+
+  try {
+    var login = await axios.post(`${process.env.database_addr}/user`, {
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    if (login.error) return res.status(400).send({ error: login.error });
+
+    answ["id-token"] = login.data;
+  } catch (err) {
+    console.error(err.code);
+    return res.status(400).send({ error: err.code });
+  }
+
+
+
 });
 
 app.listen(process.env.PORT, nip, () => {

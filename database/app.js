@@ -36,26 +36,31 @@ app.post("/channels", async (req, res) => {
 });
 
 // get all channels a user joined
-app.post("/joined-channels", (req, res) => {});
+app.post("/joinedchannels", async (req, res) => {});
 
 // get discussions of a channel
-app.post("/discussions", () => {});
+app.post("/discussions", async (req,res) => {});
 
 // get comments of a discussion
-app.post("/comments", () => {});
+app.post("/comments", async (req,res) => {});
 
 // create new channel
-app.post("/newchannel", () => {});
+app.post("/newchannel", async (req,res) => {});
 
 // start new discussion
-app.post("/startdiscussion", () => {});
+app.post("/startdiscussion", async (req,res) => {});
 
 // post comment
-app.post("/postcomment", () => {});
+app.post("/postcomment", async (req,res) => {});
 
 // add new unread notice to user
-app.post("/addnotice", () => {});
+app.post("/addnotice", async (req,res) => {});
 
-app.listen(process.env.PORT, "0.0.0.0", () =>
-  console.log("channels listening at", process.env.PORT)
+// add new unread notice to user
+app.post("/addnotice", async (req,res) => {});
+
+//get user by firebase id
+
+app.listen(process.env.PORT, "0.0.0.0", async (req,res) =>
+  console.log("database listening at", process.env.PORT)
 );

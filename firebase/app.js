@@ -18,7 +18,7 @@ app.post("/log-in", async (req, res) => {
     req.body.email,
     req.body.password
   );
-
+  
   if (await errorCode) return res.status(400).send({ error: errorCode });
   res.send(await answer);
 });
