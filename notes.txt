@@ -1,4 +1,6 @@
-frontend p 3000
+chat p 3000
+frontend p 5173
 database p 5050
 gateway p 6060
 firebase p 7070
+

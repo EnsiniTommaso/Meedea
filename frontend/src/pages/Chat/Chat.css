@@ -1,0 +1,156 @@
+.message-area {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  text-align: center;
+}
+
+header {
+  background-color: #007bff;
+  color: white;
+  padding: 30px;
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+  font-size: 28px; 
+  margin-bottom: 20px;
+}
+
+h2, .welcome-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+  position: relative;
+}
+
+h2::after, .welcome-title::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: #50e7e0;
+  margin: 8px auto 0 auto;
+  border-radius: 2px;
+}
+.App{
+  margin-bottom: 50px;
+}
+
+
+.channel-id {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 16px;
+  color: #4CAF50;
+}
+
+.room-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.room-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.room-input {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 200px;
+}
+
+.room-button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.room-button:hover {
+  background-color: #284596;
+}
+
+.message-list-container {
+  margin-bottom: 20px;
+  overflow-y: scroll;
+  max-height: 400px;
+}
+
+.message-list {
+  list-style: none;
+  padding: 0;
+}
+
+.message-item {
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message-item.self {
+  background-color: #fff; 
+  margin-left: auto; 
+  color: #000;
+}
+
+.message-item.other {
+  background-color: #e1f5fe; 
+  margin-right: auto; 
+  color: #1e88e5; 
+}
+
+.message-author {
+  font-weight: bold;
+}
+
+.message-content {
+  margin-left: 5px;
+}
+
+.message-input-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-input {
+  padding: 8px 12px; 
+  width: 80%; 
+  border: 1px solid #ccc;
+  border-radius: 5px; 
+  font-size: 14px;
+}
+
+.send-button {
+  padding: 8px 12px; 
+  background-color: #4da6ff; 
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px; 
+  border-radius: 5px; 
+}
+
+.send-button:hover {
+  background-color: #284596; 
+}

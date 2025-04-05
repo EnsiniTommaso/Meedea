@@ -1,0 +1,40 @@
+[
+    {
+        "id": 1,
+        "name": "Sedia",
+        "categories": [
+            "chair",
+            "fornitures"
+        ],
+        "description": "Una comoda sedia."
+    },
+    {
+        "id": 2,
+        "name": "Divano",
+        "categories": [
+            "couch",
+            "fornitures"
+        ],
+        "description": "Una comodissimo divano."
+    },
+    {
+        "id": 3,
+        "name": "Mela",
+        "categories": [
+            "organic",
+            "fruit",
+            "delicious"
+        ],
+        "description": "Una succosa mela."
+    },
+    {
+        "id": 4,
+        "name": "Pera",
+        "categories": [
+            "organic",
+            "fruit",
+            "less-delicious"
+        ],
+        "description": "Una succosa pera."
+    }
+]

@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import "dotenv/config";
-import { newuser } from "../database/database";
+
 
 const firebaseConfig = {
   apiKey: process.env.fb_apiKey,
