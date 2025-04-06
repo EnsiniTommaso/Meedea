@@ -7,3 +7,6 @@ cd ..
 cd gateway 
 cmd /c "npm install"
 cd ..
+cd chat 
+cmd /c "npm install"
+cd ..

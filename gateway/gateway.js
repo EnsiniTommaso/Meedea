@@ -7,7 +7,17 @@ import auth from "./auth.js";
 const app = express();
 const nip = "0.0.0.0";
 
-app.use(auth);
+//app.use(auth);
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  return next();
+});
+
 app.use(bodyParser.json());
 
 console.log("mode:", process.env.MODE);
@@ -27,15 +37,35 @@ app.get("/channels", async (req, res) => {
     userID: user_id,
   });
 
-
   if (channels) res.status(200).json(channels);
 });
 
+app.get("/chantest", (req, res) => {
+  res.json([
+    {
+      id: 1,
+      name: "Canale Tech",
+      description: "Questo canale offre contenuti educativi e tutorial.",
+    },
+    {
+      id: 2,
+      name: "Canale Musica",
+      description:
+        "Un canale per gli appassionati di musica e live performance.",
+    },
+    {
+      id: 3,
+      name: "Canale Viaggi",
+      description: "Scopri destinazioni e culture da tutto il mondo.",
+    },
+  ]);
+});
+
 app.post("/log-in", async (req, res) => {
+  var response = {};
 
-  var response = {}
-
-  if (!req.body.password || !req.body.email || !req.body.username) return res.status(400);
+  if (!req.body.password || !req.body.email || !req.body.username)
+    return res.status(400);
   console.log(req.body);
 
   try {
@@ -46,8 +76,8 @@ app.post("/log-in", async (req, res) => {
 
     if (login.error) return res.status(400).send({ error: login.error });
 
-    answ['id-token']=login.data.idtoken;
-    answ['uid']=login.data.uid
+    answ["id-token"] = login.data.idtoken;
+    answ["uid"] = login.data.uid;
   } catch (err) {
     console.error(err.code);
     return res.status(400).send({ error: err.code });
@@ -66,9 +96,6 @@ app.post("/log-in", async (req, res) => {
     console.error(err.code);
     return res.status(400).send({ error: err.code });
   }
-
-
-
 });
 
 app.listen(process.env.PORT, nip, () => {

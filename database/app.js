@@ -12,7 +12,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  test().then(console.log).catch(console.error);
+  res.json({ error: "blyat" });
 });
 
 // get unread notices of a user
@@ -39,28 +39,28 @@ app.post("/channels", async (req, res) => {
 app.post("/joinedchannels", async (req, res) => {});
 
 // get discussions of a channel
-app.post("/discussions", async (req,res) => {});
+app.post("/discussions", async (req, res) => {});
 
 // get comments of a discussion
-app.post("/comments", async (req,res) => {});
+app.post("/comments", async (req, res) => {});
 
 // create new channel
-app.post("/newchannel", async (req,res) => {});
+app.post("/newchannel", async (req, res) => {});
 
 // start new discussion
-app.post("/startdiscussion", async (req,res) => {});
+app.post("/startdiscussion", async (req, res) => {});
 
 // post comment
-app.post("/postcomment", async (req,res) => {});
+app.post("/postcomment", async (req, res) => {});
 
 // add new unread notice to user
-app.post("/addnotice", async (req,res) => {});
+app.post("/addnotice", async (req, res) => {});
 
 // add new unread notice to user
-app.post("/addnotice", async (req,res) => {});
+app.post("/addnotice", async (req, res) => {});
 
 //get user by firebase id
 
-app.listen(process.env.PORT, "0.0.0.0", async (req,res) =>
+app.listen(process.env.PORT, "0.0.0.0", async (req, res) =>
   console.log("database listening at", process.env.PORT)
 );

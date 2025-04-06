@@ -1,18 +1,37 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Channel.css';
 import Layout from '../../components/Layout';
+import axios from '../../axios.js';
 
 const Channel = () => {
   const navigate = useNavigate();
+  /*aggiunto da qui*/
+  const [channels, setChannels] = useState([]);
+  
+  useEffect(()=>{
+    
+    async function fetchChannels() {
+      const response = await axios.get('/chantest')
+      console.log('res:', response)
+      setChannels(response.data)
+      return response
+    }
+    fetchChannels()
+  },[])
 
-  const channels = [
+  console.log(channels)
+
+  /* fino a qui */
+
+  /* rimosso
+  channels = [
     { id: 1, name: 'Canale Tech', description: 'Questo canale offre contenuti educativi e tutorial.' },
     { id: 2, name: 'Canale Musica', description: 'Un canale per gli appassionati di musica e live performance.' },
     { id: 3, name: 'Canale Viaggi', description: 'Scopri destinazioni e culture da tutto il mondo.' }
   ];
-
+  */
   const handleJoin = (channelName) => {
     const success = Math.random() > 0.2;
 

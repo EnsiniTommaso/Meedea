@@ -13,6 +13,7 @@ const uri = process.env.mongo_connect_string;
 
 mongoose.connect(process.env.mongo_connect_string);
 
+console.log("connected");
 // get unread notices of a user
 export async function unreadnotices(userID) {
   var res = await notice.find({ userID: userID, read: false });
