@@ -9,9 +9,9 @@ const io = socket(
   }),
   {
     cors: {
-      origin: "http://localhost:5173", // Porta del frontend (Vite)
+      origin: "*", // Porta del frontend (Vite)
       methods: ["GET", "POST"],
-    },
+    }, 
   }
 );
 

@@ -4,3 +4,14 @@ database p 5050
 gateway p 6060
 firebase p 7070
 
+
+
+Error:
+Channel.jsx:16 
+ GET http://localhost:6060/chantest net::ERR_CONNECTION_REFUSED
+fetchChannels	@	Channel.jsx:16
+(anonymous)	@	Channel.jsx:21
+
+Channel.jsx:19 Uncaught (in promise) AxiosError {message: 'Network Error', name: 'AxiosError', code: 'ERR_NETWORK', config: {…}, request: XMLHttpRequest, …}
+
+

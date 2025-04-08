@@ -6,7 +6,7 @@ import auth from "./auth.js";
 //istanziazione del microframework express
 const app = express();
 const nip = "0.0.0.0";
-
+app.use((req,res,next)=>{console.log(req.path, req.ip);return next();})
 //app.use(auth);
 
 app.use(function (req, res, next) {
