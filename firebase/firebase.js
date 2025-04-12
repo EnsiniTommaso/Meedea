@@ -44,25 +44,30 @@ async function CreateNewUser(email, password) {
 }
 
 async function LogInUser(email, password) {
+
   if (!email) return [null, '[ERROR] LogInUser: need email'];
   if (!password) return [null, '[ERROR] LogInUser: need password'];
 
   const auth = getAuth(app);
+
+  var userCredential
+
   try {
-    const userCredential = await signInWithEmailAndPassword(
+      userCredential = await signInWithEmailAndPassword(
       auth,
       email,
       password
-    )
-    const newUser = await userCredential
-    const IdToken = newUser.user.getIdToken();
-    return [{idtoken:IdToken, uid:newUser.user.uid}, null];
+    );
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(`[${errorCode}] ${errorMessage}`);
-    return [null, errorCode];
+    console.error(5, error);
+    return [null, error];
   }
+
+
+  const newUser =  userCredential;
+  const IdToken = await newUser.user.getIdToken();
+  return [{ id_token: IdToken, uid: newUser.user.uid }, null];
+  
 }
 
 async function RemoveUser(){

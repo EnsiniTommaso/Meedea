@@ -20,11 +20,9 @@ export async function unreadnotices(userID) {
   return res;
 }
 
-// get all channels a user did not join
+// get all channels
 export async function channels(userID) {
-  var db_user = await user.findById(userID);
-  var channels = db_user.joinedchannelsIDs;
-  const res = await channel.find({ _id: { $nin: channels } });
+  const res = await channel.find();
   return res;
 }
 
@@ -109,9 +107,10 @@ export async function newuser(name, email, firebaseID) {
   });
 
   const newuser = new user({
-    firebaseID: firebaseID,
+    fbUid: firebaseID,
     name: name,
     email: email,
+    joinedchannelsIDs
   });
   await newuser.save();
 }
@@ -120,3 +119,7 @@ export async function newuser(name, email, firebaseID) {
 export async function join(userID, channelID) {}
 
 //get user through username
+export async function userByFbUid(fbUid){
+var res = await user.find({ fbUid: fbUid });
+return res[0];
+}

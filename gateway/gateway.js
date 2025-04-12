@@ -6,7 +6,10 @@ import auth from "./auth.js";
 //istanziazione del microframework express
 const app = express();
 const nip = "0.0.0.0";
-app.use((req,res,next)=>{console.log(req.path, req.ip);return next();})
+app.use((req, res, next) => {
+  console.log(req.path, req.ip);
+  return next();
+});
 //app.use(auth);
 
 app.use(function (req, res, next) {
@@ -27,15 +30,9 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/channels", async (req, res) => {
-  console.log("hasta la vittoria siempre");
-
-  var user_id = req.get("user-db-id");
-
   if (!user_id) return res.status(400).send("missing user-db-id");
 
-  var channels = await axios.post(`${process.env.database_addr}/channels`, {
-    userID: user_id,
-  });
+  var channels = await axios.post(`${process.env.database_addr}/channels`);
 
   if (channels) res.status(200).json(channels);
 });
@@ -62,41 +59,72 @@ app.get("/chantest", (req, res) => {
 });
 
 app.post("/log-in", async (req, res) => {
-  var response = {};
+  var loginres = {};
 
   if (!req.body.password || !req.body.email || !req.body.username)
-    return res.status(400);
-  console.log(req.body);
+  return res.status(400).json({ error: "missing log in data" });
+
+  console.log(1, req.body);
+
+  var login
 
   try {
     var login = await axios.post(`${process.env.firebase_addr}/log-in`, {
       email: req.body.email,
       password: req.body.password,
     });
-
-    if (login.error) return res.status(400).send({ error: login.error });
-
-    answ["id-token"] = login.data.idtoken;
-    answ["uid"] = login.data.uid;
   } catch (err) {
-    console.error(err.code);
+    console.error(3, err);
     return res.status(400).send({ error: err.code });
   }
 
+  if (login.error) return res.status(400).send({ error: login.error });
+
+  loginres["id_token"] = login.data['id_token'];
+  loginres["uid"] = login.data["uid"];
+
+  console.log(2, login.data);
+  
+
   try {
-    var login = await axios.post(`${process.env.database_addr}/user`, {
+    login = await axios.post(`${process.env.database_addr}/user`, {
+      uid: loginres.uid,
+    });
+  } catch (err) {
+    console.error(4, err);
+    return res.status(400).send({ error: err.code });
+  }
+
+  if (login.error) return res.status(400).send({ error: login.error });
+
+  if(!login.user) return res.status(500).json({error:'user not found'})
+
+  loginres["user"] = login;
+ 
+  console.log(loginres);
+  res.json(loginres)
+
+});
+
+app.post("/sign-in", async (req, res) => {
+  var answ = {};
+
+  if (!req.body.password || !req.body.email || !req.body.username)
+  return res.status(400).json({ error: "missing sign-in data" });
+  
+  try {
+    var signin = await axios.post(`${process.env.firebase_addr}/sign-in`, {
       email: req.body.email,
       password: req.body.password,
     });
+  } catch(err) {console.log(err); return res.status(500)}
 
-    if (login.error) return res.status(400).send({ error: login.error });
-
-    answ["id-token"] = login.data;
-  } catch (err) {
-    console.error(err.code);
-    return res.status(400).send({ error: err.code });
-  }
+  if (!signin.uid)return res.status(500);
+  
+  
+  
 });
+
 
 app.listen(process.env.PORT, nip, () => {
   console.log(`Gateway running at port ${process.env.PORT}`);

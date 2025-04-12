@@ -12,16 +12,50 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.post("/log-in", async (req, res) => {
-  console.log(req.body);
+
+  console.log(1, req.body);
+
   if (!req.body.email || !req.body.password) return res.status(400);
-  const [answer, errorCode] = await LogInUser(
+
+  const [answer, error] = await LogInUser(
     req.body.email,
     req.body.password
   );
+
+  if (await error) {
+
+    console.error(2, error);
+    return res.status(400).send({ error: error });
+  } else {
+    console.log(answer)
+    res.send(await answer);
+  }
+
   
-  if (await errorCode) return res.status(400).send({ error: errorCode });
-  res.send(await answer);
 });
+
+app.post("/sign-in", async (req, res) => {
+  
+  console.log(1, req.body);
+
+  if (!req.body.email || !req.body.password)
+  return res.status(400);
+
+  const [answer, error] = await CreateNewUser(
+    req.body.email,
+    req.body.password
+  );
+
+  if (await error) {
+    console.error(2, error);
+    return res.status(400).send({ error: error });
+  } else {
+    console.log(answer);
+    
+    res.send({uid:answer.uid});
+  }
+});
+
 
 app.listen(process.env.PORT, () =>
   console.log("listening on port", process.env.PORT)

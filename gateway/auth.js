@@ -1,4 +1,4 @@
-//https://firebase.google.com/docs/auth/admin/verify-id-tokens?hl=it#web
+//https://firebase.google.com/docs/auth/admin/verify-id_tokens?hl=it#web
 
 const resp = await fetch(
   "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
@@ -13,7 +13,7 @@ for (const key in body) {
 
 async function CheckIdToken(req, res, next) {
   console.log(req.path, Date.now());
-  const IdToken = req.get("id-token");
+  const IdToken = req.get("id_token");
 
   if (req.path == "/log-in") return next();
 
