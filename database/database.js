@@ -100,26 +100,20 @@ export async function addnotice(content, userID) {
 
 // create new user
 export async function newuser(name, email, firebaseID) {
-  var users = await user.find();
-
-  users.forEach((us) => {
-    if (us.name == name) throw new Error("user name used already");
-  });
-
   const newuser = new user({
     fbUid: firebaseID,
     name: name,
     email: email,
-    joinedchannelsIDs
+    joinedchannelsIDs: [],
   });
-  await newuser.save();
+  return await newuser.save();
 }
 
 // make a user join a channel
 export async function join(userID, channelID) {}
 
 //get user through username
-export async function userByFbUid(fbUid){
-var res = await user.find({ fbUid: fbUid });
-return res[0];
+export async function userByFbUid(fbUid) {
+  var res = await user.find({ fbUid: fbUid });
+  return res[0];
 }

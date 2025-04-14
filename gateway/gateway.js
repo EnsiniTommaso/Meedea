@@ -62,11 +62,11 @@ app.post("/log-in", async (req, res) => {
   var loginres = {};
 
   if (!req.body.password || !req.body.email || !req.body.username)
-  return res.status(400).json({ error: "missing log in data" });
+    return res.status(400).json({ error: "missing log in data" });
 
   console.log(1, req.body);
 
-  var login
+  var login;
 
   try {
     var login = await axios.post(`${process.env.firebase_addr}/log-in`, {
@@ -80,11 +80,10 @@ app.post("/log-in", async (req, res) => {
 
   if (login.error) return res.status(400).send({ error: login.error });
 
-  loginres["id_token"] = login.data['id_token'];
+  loginres["id_token"] = login.data["id_token"];
   loginres["uid"] = login.data["uid"];
 
   console.log(2, login.data);
-  
 
   try {
     login = await axios.post(`${process.env.database_addr}/user`, {
@@ -97,34 +96,56 @@ app.post("/log-in", async (req, res) => {
 
   if (login.error) return res.status(400).send({ error: login.error });
 
-  if(!login.user) return res.status(500).json({error:'user not found'})
+  if (!login.user) return res.status(500).json({ error: "user not found" });
 
   loginres["user"] = login;
- 
-  console.log(loginres);
-  res.json(loginres)
 
+  console.log(loginres);
+  res.json(loginres);
 });
 
 app.post("/sign-in", async (req, res) => {
+  console.log(1);
   var answ = {};
 
   if (!req.body.password || !req.body.email || !req.body.username)
-  return res.status(400).json({ error: "missing sign-in data" });
-  
+    return res.status(400).json({ error: "missing sign-in data" });
+
+  console.log(2);
+
+  var signin;
+
   try {
-    var signin = await axios.post(`${process.env.firebase_addr}/sign-in`, {
+    signin = await axios.post(`${process.env.firebase_addr}/sign-in`, {
       email: req.body.email,
       password: req.body.password,
     });
-  } catch(err) {console.log(err); return res.status(500)}
+  } catch (err) {
+    console.log(err);
+    return res.status(500);
+  }
 
-  if (!signin.uid)return res.status(500);
-  
-  
-  
+  console.log(3, signin.data.uid);
+
+  if (!signin.data.uid) return res.status(500);
+
+  var uid = signin.data.uid;
+
+  console.log(4, uid);
+
+  try {
+    signin = await axios.post(`${process.env.database_addr}/newuser`, {
+      name: req.body.username,
+      email: req.body.email,
+      uid: uid,
+    });
+    console.log(5, "done", signin);
+    res.status(201).send(signin.data);
+  } catch (err) {
+    console.log(err);
+    return res.status(500);
+  }
 });
-
 
 app.listen(process.env.PORT, nip, () => {
   console.log(`Gateway running at port ${process.env.PORT}`);

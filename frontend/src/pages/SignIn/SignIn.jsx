@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';  
 import Layout from "../../components/Layout"; 
 import './SignIn.css'; 
+import axios from '../../axios.js';
+
 
 export default function AboutUs() {
   const [username, setUsername] = useState('');
@@ -15,16 +17,14 @@ export default function AboutUs() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch('http://localhost:5000/sign-in', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password }),
-    });
+    const res = await await axios.post('/sign-in',
+      { username, password, email}
+     );
 
-    const data = await res.json();
-
-    if (data.success) {
-      navigate('/login'); //da mkodificare
+    if (res.data.user) {
+      navigate(-1)
+      navigate('LogIn'); //da mkodificare
+      console.log(data)
     } else {
       setErrorMessage(data.message || 'Si è verificato un errore durante la registrazione.');
     }
