@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 // URL del backend (Express)
-const SOCKET_URL = "http://localhost:3000";
+const SOCKET_URL = "http://10.10.0.20:3000";
 
 // Connessione al server socket
 const socket = io(SOCKET_URL, {

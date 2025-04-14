@@ -61,7 +61,7 @@ app.get("/chantest", (req, res) => {
 app.post("/log-in", async (req, res) => {
   var loginres = {};
 
-  if (!req.body.password || !req.body.email || !req.body.username)
+  if (!req.body.password || !req.body.email)
     return res.status(400).json({ error: "missing log in data" });
 
   console.log(1, req.body);

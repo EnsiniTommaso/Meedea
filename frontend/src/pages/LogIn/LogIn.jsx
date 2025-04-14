@@ -9,7 +9,7 @@ import './LogIn.css';
 import Layout from '../../components/Layout';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
 
     const res = await axios.post('/log-in',
-     { username, password }
+     { email, password }
     );
 
     const data = await res.json();
@@ -47,14 +47,14 @@ const Login = () => {
 
         <div className="form-container">
           <form onSubmit={handleSubmit} className="flex flex-col">
-            <label htmlFor="username" className="mb-1">Username</label>
+            <label htmlFor="email" className="mb-1">Email</label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="email"
+              name="email"
               className="border p-2 rounded mb-4"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
 
