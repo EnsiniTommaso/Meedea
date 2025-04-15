@@ -83,8 +83,6 @@ app.post("/log-in", async (req, res) => {
   loginres["id_token"] = login.data["id_token"];
   loginres["uid"] = login.data["uid"];
 
-  console.log(2, login.data);
-
   try {
     login = await axios.post(`${process.env.database_addr}/user`, {
       uid: loginres.uid,
@@ -95,12 +93,9 @@ app.post("/log-in", async (req, res) => {
   }
 
   if (login.error) return res.status(400).send({ error: login.error });
-
-  if (!login.user) return res.status(500).json({ error: "user not found" });
-
-  loginres["user"] = login;
-
-  console.log(loginres);
+  if (!login.data) return res.status(500).json({ error: "user not found" });
+  loginres["user"] = login.data;
+  console.log('gone well');
   res.json(loginres);
 });
 

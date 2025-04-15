@@ -21,17 +21,17 @@ const Login = () => {
     const res = await axios.post('/log-in',
      { email, password }
     );
+    
+    console.log(res)
 
-    const data = await res.json();
-
-    if (data.id_token) {
-      setCookie('id_token', data.id_token, { expires: 1 }); 
+    if (res.data.id_token) {
+      setCookie('id_token', res.data.id_token); 
     } else {
       setErrorMessage('Credenziali non valide. Riprova!');
     }
 
-    if (data.uid) {
-      setCookie('uid', data.id_token, { expires: 1 }); 
+    if (res.data.uid) {
+      setCookie('uid', res.data.id_token); 
       navigate('../Profile'); 
     } else {
       setErrorMessage('Credenziali non valide. Riprova!');
