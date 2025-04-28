@@ -6,12 +6,12 @@ services:
     ports:
       - "5050:5050"
 
-  gateway:
-    build:
+  #gateway:
+    #build:
       # nome cartella
-      context: ./gateway
-    ports:
-      - "6060:6060"
+      #context: ./gateway
+    #ports:
+      #- "6060:6060"
 
   firebase:
     build:
@@ -26,3 +26,10 @@ services:
       context: ./chat
     ports:
       - "3000:3000"
+
+  frontend:
+    build:
+      # nome cartella
+      context: ./frontend
+    ports:
+      - "80:80"
