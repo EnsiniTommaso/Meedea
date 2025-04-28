@@ -31,7 +31,7 @@ const Login = () => {
     }
 
     if (res.data.uid) {
-      setCookie('uid', res.data.id_token); 
+      setCookie('uid', res.data.uid); 
       navigate('../Profile'); 
     } else {
       setErrorMessage('Credenziali non valide. Riprova!');

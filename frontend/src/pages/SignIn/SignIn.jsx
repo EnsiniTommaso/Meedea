@@ -24,7 +24,7 @@ export default function AboutUs() {
     if (res.data.user) {
       navigate(-1)
       navigate('LogIn'); //da mkodificare
-      console.log(data)
+      console.log(res.data)
     } else {
       setErrorMessage(data.message || 'Si è verificato un errore durante la registrazione.');
     }
