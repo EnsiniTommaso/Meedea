@@ -13,14 +13,19 @@ for (const key in body) {
 
 async function CheckIdToken(req, res, next) {
   console.log(req.path, Date.now());
-  const IdToken = req.get("id_token");
+
+  const id_token = req.get("id_token");
+  const uid = req.get("uid");
 
   if (req.path == "/log-in") return next();
+  if (req.path == "/sign-in") return next();
 
-  if (!IdToken) return res.status(400);
+  if (!id_token) return res.status(400);
+  if (!uid) return res.status(400);
 
+  console.log('accepted')
   try {
-    const [header, payload] = parseJwt(IdToken);
+    const [header, payload] = parseJwt(id_token);
 
     var date = new Date().getTime() / 1000;
 

@@ -8,8 +8,10 @@ import Shop from '../pages/Shop.jsx'
 import NotFound from '../pages/NotFound.jsx'
 import ItemPage from '../pages/ItemPage.jsx'
 import profileIcon from "../assets/profile-icon.png"; 
+import assistance from '../assets/assistance.png'
 import Profile from '../pages/Profile/Profile.jsx'
 import Hangman from '../pages/Hangman/Hangman.jsx'
+import ChatBox from '../pages/Chatbox/ChatBox.jsx'
 
 export default function NavBar() {
     return (
@@ -44,6 +46,9 @@ export default function NavBar() {
             </ul>
             <NavLink to="/profile" className="profile-link">
                 <img src={profileIcon} alt="Profile" className="profile-icon" />
+            </NavLink>
+            <NavLink to="/ChatBox" className="profile-link">
+                <img src={assistance} alt="ChatBox" className="profile-icon" />
             </NavLink>
         </nav>
     );

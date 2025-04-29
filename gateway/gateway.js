@@ -10,7 +10,7 @@ app.use((req, res, next) => {
   console.log(req.path, req.ip);
   return next();
 });
-//app.use(auth);
+app.use(auth);
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

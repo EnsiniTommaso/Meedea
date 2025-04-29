@@ -23,7 +23,7 @@ export default function Footer() {
                 </div>
                 <div className="row mt-3">
                     <div className="col text-center">
-                        <a className="text-decoration-none text-reset font-monospace d-flex justify-content-center align-items-center gap-2" href="#" target="_blank" rel="noreferrer">
+                        <a className="text-decoration-none text-reset font-monospace d-flex justify-content-center align-items-center gap-2" href="https://github.com/EnsiniTommaso/Meedea" target="_blank" rel="noreferrer">
                             <img src={githubLogo} alt="GitHub Logo" style={{ width: "20px" }} />
                             GitHub Repository
                         </a>
