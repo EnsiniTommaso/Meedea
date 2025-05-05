@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Hangman.css";
 import Layout from "../../components/Layout";
+import Hangaman from "../../assets/assistenza2.png"; 
+
+
+
 
 const Hangman = () => {
   const words = ["react", "javascript", "html", "css", "node", "express"];
@@ -12,18 +16,26 @@ const Hangman = () => {
   const [gameWon, setGameWon] = useState(false); // Aggiunto stato corretto
 
   useEffect(() => {
+    
+    
+
     startNewGame();
   }, []);
 
-  const startNewGame = () => {
-    const randomWord = words[Math.floor(Math.random() * words.length)];
-    setSelectedWord(randomWord);
+  const startNewGame = async () => {
+    var len = 2 + Math.floor(Math.random() * 6)
+    const randomWord = await fetch(`https://random-word-api.herokuapp.com/word?lang=it&length=${len}`) //words[Math.floor(Math.random() * words.length)] //await fetch('https://random-word-api.herokuapp.com/word?lang=it') //words[Math.floor(Math.random() * words.length)];
+    var word = await randomWord.json()
+    setSelectedWord(word[0]);
     setGuessedLetters([]);
     setRemainingAttempts(12);
     setGameOver(false);
     setGameWon(false);
     setImageIndex(0);
   };
+  
+
+  
 
   const handleGuess = (letter) => {
     if (gameOver || guessedLetters.includes(letter)) return;
@@ -69,7 +81,7 @@ const Hangman = () => {
               <p>Attempts left: {remainingAttempts}</p>
             </div>
             <div className={`hangman-image ${gameOver ? "show" : ""}`}>
-              <img src={`../assets/Hangman-${imageIndex + 1}.png`} alt="Hangman" />
+              <img src={`../../assets/Hangman-${imageIndex + 1}.png`} alt="Hangman" />
             </div>
           </div>
 

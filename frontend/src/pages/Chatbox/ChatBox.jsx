@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout";
 import "./ChatBox.css";
+import botAvatar from "../../assets/assistenza2.png"; 
+
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([
@@ -42,15 +44,12 @@ const ChatBox = () => {
         <h1>Assistenza Clienti</h1>
         <div className="chat-box">
           {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`chat-message ${msg.sender}`}
-            >
+            <div key={idx} className={`chat-message ${msg.sender}`}>
               <img
                 src={
                   msg.sender === "user"
-                    ? "/user-avatar.jpg"
-                    : "/bot-avatar.png"
+                    ? "/user-avatar.jpg" 
+                    : botAvatar
                 }
                 alt={`${msg.sender} avatar`}
                 className="avatar"
