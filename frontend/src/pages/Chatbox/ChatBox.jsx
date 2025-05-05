@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Layout from "../../components/Layout";
 import "./ChatBox.css";
 
 const ChatBox = () => {
@@ -11,12 +12,10 @@ const ChatBox = () => {
     if (!input.trim()) return;
 
     const userMessage = { sender: "user", text: input };
-    setMessages([...messages, userMessage]);
-
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
     try {
-      // Chiamata a un'API esterna (placeholder)
       const response = await fetch("https://api.example.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -24,8 +23,10 @@ const ChatBox = () => {
       });
 
       const data = await response.json();
-      const botMessage = { sender: "bot", text: data.reply || "Risposta non disponibile." };
-
+      const botMessage = {
+        sender: "bot",
+        text: data.reply || "Risposta non disponibile."
+      };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       setMessages((prev) => [
@@ -36,30 +37,41 @@ const ChatBox = () => {
   };
 
   return (
-    <div className="chat-container">
-      <h2>Assistenza Clienti</h2>
-      <div className="chat-box">
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`chat-message ${msg.sender === "user" ? "user" : "bot"}`}
-          >
-            {msg.text}
-          </div>
-        ))}
+    <Layout>
+      <div className="chat-container">
+        <h1>Assistenza Clienti</h1>
+        <div className="chat-box">
+          {messages.map((msg, idx) => (
+            <div
+              key={idx}
+              className={`chat-message ${msg.sender}`}
+            >
+              <img
+                src={
+                  msg.sender === "user"
+                    ? "/user-avatar.jpg"
+                    : "/bot-avatar.png"
+                }
+                alt={`${msg.sender} avatar`}
+                className="avatar"
+              />
+              <div className="message-bubble">{msg.text}</div>
+            </div>
+          ))}
+        </div>
+        <div className="chat-input">
+          <input
+            type="text"
+            placeholder="Scrivi qui..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+          />
+          <button onClick={handleSend}>Invia</button>
+        </div>
       </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          placeholder="Scrivi un messaggio..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        />
-        <button onClick={handleSend}>Invia</button>
-      </div>
-    </div>
+    </Layout>
   );
 };
 
-export default ChatBox
+export default ChatBox;

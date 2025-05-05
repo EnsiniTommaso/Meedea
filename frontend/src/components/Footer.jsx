@@ -12,11 +12,11 @@ export default function Footer() {
                     <div className="col-12 col-lg-6 text-center text-lg-end">
                         <h5>All World In Connection</h5>
                         <h6 className="text-secondary">
-                            by <a target="_blank" rel="noreferrer" className="text-decoration-none text-secondary">Saliani Alexia</a> — 
+                            by <a target="_blank" rel="noreferrer" className="text-decoration-none text-secondary" style={{ backgroundColor: "transparent" }}  >Saliani Alexia</a> — 
                             <code> alexia.saliani.stud@ispascalcomandini.it</code>
                         </h6>
                         <h6 className="text-secondary">
-                            by <a target="_blank" rel="noreferrer" className="text-decoration-none text-secondary">Ensini Tommaso</a> — 
+                            by <a target="_blank" rel="noreferrer" className="text-decoration-none text-secondary"  style={{ backgroundColor: "transparent" }} >Ensini Tommaso</a> — 
                             <code> tommaso.ensini.stud@ispascalcomandini.it</code>
                         </h6>
                     </div>
@@ -24,7 +24,7 @@ export default function Footer() {
                 <div className="row mt-3">
                     <div className="col text-center">
                         <a className="text-decoration-none text-reset font-monospace d-flex justify-content-center align-items-center gap-2" href="https://github.com/EnsiniTommaso/Meedea" target="_blank" rel="noreferrer">
-                            <img src={githubLogo} alt="GitHub Logo" style={{ width: "20px" }} />
+                            <img src={githubLogo} alt="GitHub Logo" style={{ width: "20px", backgroundColor: "transparent"}} />
                             GitHub Repository
                         </a>
                     </div>

@@ -55,6 +55,7 @@ const Login = () => {
               className="border p-2 rounded mb-4"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder='Inserisci la tua Email'
               required
             />
 
@@ -66,6 +67,7 @@ const Login = () => {
               className="border p-2 rounded mb-4"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder='Inserisci la tua Password'
               required
             />
 
@@ -77,7 +79,7 @@ const Login = () => {
           </form>
 
           <p className="mt-4 text-center">
-            Non hai un account? <Link to="../SignIn" className="button">Registrati qui</Link>
+            Non hai un account? <Link to="../SignIn" className="button-a">Registrati qui</Link>
           </p>
         </div>
       </div>

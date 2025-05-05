@@ -41,7 +41,6 @@ input[type="password"] {
 button {
   padding: 12px 20px;
   background-color: #28a745;
-  color: blue;
   border: none;
   cursor: pointer;
   border-radius: 25px;
@@ -49,6 +48,9 @@ button {
   width: 100%;
 }
 
+.button-a{
+  background-color:#007bff;
+}
 button:hover {
   background-color: #218838;
   transform: scale(1.05);
@@ -61,7 +63,6 @@ p {
 
 a {
   color: #007bff;
-  background-color: blue;
 }
 
 a:hover {

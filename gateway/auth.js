@@ -14,6 +14,8 @@ for (const key in body) {
 async function CheckIdToken(req, res, next) {
   console.log(req.path, Date.now());
 
+  console.log("Cookies: ", req.cookies);
+
   const id_token = req.get("id_token");
   const uid = req.get("uid");
 
@@ -23,7 +25,7 @@ async function CheckIdToken(req, res, next) {
   if (!id_token) return res.status(400);
   if (!uid) return res.status(400);
 
-  console.log('accepted')
+  console.log("accepted");
   try {
     const [header, payload] = parseJwt(id_token);
 
@@ -92,7 +94,6 @@ async function CheckIdToken(req, res, next) {
     console.error(err);
     return;
   }
-  
 }
 
 function parseJwt(token) {

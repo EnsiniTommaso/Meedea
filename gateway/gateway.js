@@ -1,16 +1,24 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import axios from "axios";
 import "dotenv/config";
 import auth from "./auth.js";
 //istanziazione del microframework express
 const app = express();
 const nip = "0.0.0.0";
+app.use(cookieParser());
 app.use((req, res, next) => {
-  console.log(req.path, req.ip);
+  // Cookies that have not been signed
+  console.log("Cookies: ", req.cookies);
+
+  // Cookies that have been signed
+  console.log("Signed Cookies: ", req.signedCookies);
+  console.log(req.path, req.ip, Math.floor(Date.now() / 1000));
   return next();
 });
-app.use(auth);
+
+//app.use(auth);
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -84,6 +92,7 @@ app.post("/log-in", async (req, res) => {
   loginres["uid"] = login.data["uid"];
 
   try {
+    console.log(loginres.uid);
     login = await axios.post(`${process.env.database_addr}/user`, {
       uid: loginres.uid,
     });
@@ -95,7 +104,7 @@ app.post("/log-in", async (req, res) => {
   if (login.error) return res.status(400).send({ error: login.error });
   if (!login.data) return res.status(500).json({ error: "user not found" });
   loginres["user"] = login.data;
-  console.log('gone well');
+  console.log("gone well");
   res.json(loginres);
 });
 

@@ -6,12 +6,12 @@ import user from "./models/user.js";
 import bodyParser from "body-parser";
 
 const app = express();
-
+app.use(bodyParser.json());
 app.use((req, res, next) => {
   console.log(req.path);
   return next();
 });
-app.use(bodyParser.json());
+
 app.get("/", (req, res) => {
   res.json({ error: "blyat" });
 });
@@ -61,14 +61,14 @@ app.post("/addnotice", async (req, res) => {});
 
 //get user by firebase id
 app.post("/user", async (req, res) => {
-  if (!req.body.uid) res.status(400).json({ error: "missing uid" });
+  if (!req.body.uid) return res.status(400).json({ error: "missing uid" });
 
   console.log(req.body);
 
   var uid = req.body.uid;
   var answ = await db.userByFbUid(uid);
 
-  console.log(answ);
+  console.log("answ:", answ);
 
   res.json({ user: answ });
 });

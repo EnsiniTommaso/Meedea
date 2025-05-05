@@ -62,7 +62,6 @@ p {
 }
 
 a {
-  color: #007bff;
   text-decoration: none;
 }
 
@@ -109,7 +108,6 @@ a:hover {
   button {
     font-size: 14px;
     padding: 10px 0;
-    color:#007bff;
   }
 
   input[type="text"],

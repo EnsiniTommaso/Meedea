@@ -115,5 +115,6 @@ export async function join(userID, channelID) {}
 //get user through username
 export async function userByFbUid(fbUid) {
   var res = await user.find({ fbUid: fbUid });
+  console.log("res", res);
   return res[0];
 }

@@ -83,7 +83,7 @@ export default function AboutUs() {
           </form>
 
           <p className="mt-4 text-center">
-            Hai già un account? <Link to="../LogIn" className="button">Accedi qui</Link>
+            Hai già un account? <Link to="../LogIn" className="button-a">Accedi qui</Link>
           </p>
         </div>
       </div>
