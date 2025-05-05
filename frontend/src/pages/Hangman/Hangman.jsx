@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Hangman.css";
 import Layout from "../../components/Layout";
-import Hangaman from "../../assets/assistenza2.png"; 
-
-
-
+ 
 
 const Hangman = () => {
   const words = ["react", "javascript", "html", "css", "node", "express"];
