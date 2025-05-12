@@ -4,32 +4,22 @@ import cookieParser from "cookie-parser";
 import axios from "axios";
 import "dotenv/config";
 import auth from "./auth.js";
+import fs from "node:fs";
+import cors from "cors";
+import { parseArgs } from "node:util";
+
 //istanziazione del microframework express
 const app = express();
 const nip = "0.0.0.0";
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use((req, res, next) => {
-  // Cookies that have not been signed
-  console.log("Cookies: ", req.cookies);
-
-  // Cookies that have been signed
-  console.log("Signed Cookies: ", req.signedCookies);
+  fs.writeFile("./log.json", JSON.stringify(req), (err) => console.log(err));
+  res.set("Access-Control-Allow-Credentials", "true");
   console.log(req.path, req.ip, Math.floor(Date.now() / 1000));
   return next();
 });
-
-//app.use(auth);
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  return next();
-});
-
-app.use(bodyParser.json());
+app.use(auth);
 
 console.log("mode:", process.env.MODE);
 
@@ -82,7 +72,7 @@ app.post("/log-in", async (req, res) => {
       password: req.body.password,
     });
   } catch (err) {
-    console.error(3, err);
+    console.error(3, err.code);
     return res.status(400).send({ error: err.code });
   }
 

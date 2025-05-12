@@ -12,20 +12,18 @@ for (const key in body) {
 }
 
 async function CheckIdToken(req, res, next) {
-  console.log(req.path, Date.now());
-
-  console.log("Cookies: ", req.cookies);
-
-  const id_token = req.get("id_token");
-  const uid = req.get("uid");
-
   if (req.path == "/log-in") return next();
   if (req.path == "/sign-in") return next();
 
-  if (!id_token) return res.status(400);
-  if (!uid) return res.status(400);
+  console.log("Cookies: ", JSON.parse(JSON.stringify(req.cookies)));
+  const id_token = req.get("id_token");
+  const uid = req.get("uid");
 
-  console.log("accepted");
+  if (id_token) console.log("id_token");
+  else return res.status(400).send("no id token");
+  if (uid) console.log("uid");
+  else return res.status(400).send("no uid");
+
   try {
     const [header, payload] = parseJwt(id_token);
 
@@ -87,6 +85,7 @@ async function CheckIdToken(req, res, next) {
       console.log("iss != ");
     }
     console.log("valid", valid);
+
     if (!valid) return res.status(500).json({ error: "bad request token" });
 
     return next();

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout";
 import "./ChatBox.css";
-import botAvatar from "../../assets/assistenza2.png"; 
-
+import profile from '../../assets/profile-icon.png';
+import botAvatar from "../../assets/assistenza2.png";
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([
@@ -18,7 +18,8 @@ const ChatBox = () => {
     setInput("");
 
     try {
-      const response = await fetch("https://api.example.com/chat", {
+      // Fai una richiesta al backend che interagisce con Gemini
+      const response = await fetch("https://your-backend-server.com/api/chat", { // Modifica con il tuo server
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input })
@@ -46,11 +47,7 @@ const ChatBox = () => {
           {messages.map((msg, idx) => (
             <div key={idx} className={`chat-message ${msg.sender}`}>
               <img
-                src={
-                  msg.sender === "user"
-                    ? "/user-avatar.jpg" 
-                    : botAvatar
-                }
+                src={msg.sender === "user" ? profile : botAvatar}
                 alt={`${msg.sender} avatar`}
                 className="avatar"
               />

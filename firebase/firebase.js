@@ -7,7 +7,6 @@ import {
 } from "firebase/auth";
 import "dotenv/config";
 
-
 const firebaseConfig = {
   apiKey: process.env.fb_apiKey,
   authDomain: process.env.fb_authDomain,
@@ -19,7 +18,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 
 async function CreateNewUser(email, password) {
   if (!email) return [null, "need emai"]; //returns 'undefined'
@@ -44,35 +42,28 @@ async function CreateNewUser(email, password) {
 }
 
 async function LogInUser(email, password) {
-
-  if (!email) return [null, '[ERROR] LogInUser: need email'];
-  if (!password) return [null, '[ERROR] LogInUser: need password'];
+  if (!email) return [null, "[ERROR] LogInUser: need email"];
+  if (!password) return [null, "[ERROR] LogInUser: need password"];
 
   const auth = getAuth(app);
 
-  var userCredential
+  var userCredential;
 
   try {
-      userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    userCredential = await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    console.error(5, error);
-    return [null, error];
+    console.error(5, error.code);
+    return [null, error.code];
   }
 
-
-  const newUser =  userCredential;
+  const newUser = userCredential;
   const IdToken = await newUser.user.getIdToken();
   return [{ id_token: IdToken, uid: newUser.user.uid }, null];
-  
 }
 
-async function RemoveUser(){
+async function RemoveUser() {
   //https://github.com/firebase/snippets-node/blob/e29c2c3ced6c1a3cb14ad5ab7588dac578c06453/auth/manage_users.js
 }
 
-console.log(process.env.MODE)
+console.log(process.env.MODE);
 export { CreateNewUser, LogInUser };
