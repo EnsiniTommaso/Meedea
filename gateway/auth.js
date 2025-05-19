@@ -1,3 +1,6 @@
+import { writeFileSync } from "fs";
+import stringify from "json-stringify-safe";
+import 'dotenv/config'
 //https://firebase.google.com/docs/auth/admin/verify-id_tokens?hl=it#web
 
 const resp = await fetch(
@@ -16,6 +19,13 @@ async function CheckIdToken(req, res, next) {
   if (req.path == "/sign-in") return next();
 
   console.log("Cookies: ", JSON.parse(JSON.stringify(req.cookies)));
+
+  // Copys
+  writeFileSync(
+    process.env.LOG,
+    stringify(req)
+  );
+
   const id_token = req.get("id_token");
   const uid = req.get("uid");
 

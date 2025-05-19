@@ -2,23 +2,24 @@ import express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import axios from "axios";
+import cors from "cors";
 import "dotenv/config";
 import auth from "./auth.js";
 import fs from "node:fs";
-import cors from "cors";
 import { parseArgs } from "node:util";
 
 //istanziazione del microframework express
 const app = express();
 const nip = "0.0.0.0";
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-  fs.writeFile("./log.json", JSON.stringify(req), (err) => console.log(err));
-  res.set("Access-Control-Allow-Credentials", "true");
   console.log(req.path, req.ip, Math.floor(Date.now() / 1000));
   return next();
 });
+
+//app.use(cors());
 app.use(auth);
 
 console.log("mode:", process.env.MODE);

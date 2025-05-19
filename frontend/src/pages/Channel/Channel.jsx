@@ -13,7 +13,7 @@ const Channel = () => {
   useEffect(()=>{
     
     async function fetchChannels() {
-      const response = await axios.get('/chantest',{withCredentials:true})
+      const response = await axios.get('/chantest')
       console.log('res:', response)
       setChannels(response.data)
       return response
