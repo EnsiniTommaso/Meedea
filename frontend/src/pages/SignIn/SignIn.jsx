@@ -1,32 +1,37 @@
-'use client'; 
-import { useState } from 'react'; 
-import { useNavigate } from 'react-router-dom';  
-import { Link } from 'react-router-dom';  
-import Layout from "../../components/Layout"; 
-import './SignIn.css'; 
+'use client';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import Layout from '../../components/Layout';
+import './SignIn.css';
 import axios from '../../axios.js';
-
 
 export default function AboutUs() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await await axios.post('/sign-in',
-      { username, password, email}
-     );
+    try {
+      const res = await axios.post('/sign-in', {
+        username,
+        password,
+        email,
+      });
 
-    if (res.data.user) {
-      navigate(-1)
-      navigate('LogIn'); //da mkodificare
-      console.log(res.data)
-    } else {
-      setErrorMessage(data.message || 'Si è verificato un errore durante la registrazione.');
+      if (res.data.user) {
+        navigate(-1);
+        navigate('LogIn'); // eventualmente da modificare
+        console.log(res.data);
+      } else {
+        setErrorMessage(res.data.message || 'Si è verificato un errore durante la registrazione.');
+      }
+    } catch (err) {
+      setErrorMessage('Errore durante la richiesta al server.');
+      console.error(err);
     }
   };
 
@@ -38,42 +43,46 @@ export default function AboutUs() {
         </header>
 
         <div className="form-container">
-          <form onSubmit={handleSubmit} className="flex flex-col">
-            <label htmlFor="username" className="mb-1">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              className="border p-2 rounded mb-4"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Scegli un username"
-              required
-            />
+          <form onSubmit={handleSubmit}>
 
-            <label htmlFor="email" className="mb-1">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="border p-2 rounded mb-4"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Inserisci la tua email"
-              required
-            />
+            <div className="form-row">
+              <label htmlFor="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Scegli un username"
+                required
+              />
+            </div>
 
-            <label htmlFor="password" className="mb-1">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="border p-2 rounded mb-4"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Scegli una password"
-              required
-            />
+            <div className="form-row">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Inserisci la tua email"
+                required
+              />
+            </div>
+
+            <div className="form-row">
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Scegli una password"
+                required
+              />
+            </div>
 
             {errorMessage && (
               <p className="text-red-500 text-center mb-4">{errorMessage}</p>

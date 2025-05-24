@@ -1,11 +1,9 @@
-'use client'; 
-import { useState } from 'react'; 
-import { useNavigate } from 'react-router-dom'; 
-import { useCookies } from 'react-cookie'; 
-import { CookiesProvider } from 'react-cookie';
-import { Link } from 'react-router-dom'; 
-import axios from '../../axios.js'
-import './LogIn.css'; 
+'use client';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import axios from '../../axios.js';
+import './LogIn.css';
 import Layout from '../../components/Layout';
 
 const Login = () => {
@@ -13,28 +11,26 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  
-  const [cookies, setCookie] = useCookies(['id_token','uid']); 
+
+  const [cookies, setCookie] = useCookies(['id_token', 'uid']);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await axios.post('/log-in',
-     { email, password }
-    );
-    
-    console.log(res)
+    try {
+      const res = await axios.post('/log-in', { email, password });
+      console.log(res);
 
-    if (res.data.id_token) {
-      setCookie('id_token', res.data.id_token); 
-    } else {
-      setErrorMessage('Credenziali non valide. Riprova!');
-    }
-
-    if (res.data.uid) {
-      setCookie('uid', res.data.uid); 
-      navigate('../Profile'); 
-    } else {
-      setErrorMessage('Credenziali non valide. Riprova!');
+      if (res.data.id_token && res.data.uid) {
+        setCookie('id_token', res.data.id_token);
+        setCookie('uid', res.data.uid);
+        navigate('../Profile');
+      } else {
+        setErrorMessage('Credenziali non valide. Riprova!');
+      }
+    } catch (err) {
+      setErrorMessage('Errore durante la richiesta al server.');
+      console.error(err);
     }
   };
 
@@ -46,30 +42,33 @@ const Login = () => {
         </header>
 
         <div className="form-container">
-          <form onSubmit={handleSubmit} className="flex flex-col">
-            <label htmlFor="email" className="mb-1">Email</label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              className="border p-2 rounded mb-4"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder='Inserisci la tua Email'
-              required
-            />
+          <form onSubmit={handleSubmit}>
 
-            <label htmlFor="password" className="mb-1">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="border p-2 rounded mb-4"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder='Inserisci la tua Password'
-              required
-            />
+            <div className="form-row">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Inserisci la tua Email"
+                required
+              />
+            </div>
+
+            <div className="form-row">
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Inserisci la tua Password"
+                required
+              />
+            </div>
 
             {errorMessage && (
               <p className="text-red-500 text-center mb-4">{errorMessage}</p>

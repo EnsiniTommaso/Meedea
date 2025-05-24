@@ -10,6 +10,7 @@ import Profile from '../pages/Profile/Profile.jsx'
 import Hangman from '../pages/Hangman/Hangman.jsx'
 import Chat from '../pages/Chat/Chat.jsx'
 import ChatBox from '../pages/Chatbox/ChatBox.jsx'
+import Gemini from '../pages/Gemini/Gemini.jsx'
 import ModificaProfilo from '../pages/ModificaProfilo/ModificaProfilo.jsx'
 import { CookiesProvider } from 'react-cookie';
 
@@ -53,6 +54,10 @@ export default function App() {
             </Route>
             <Route path='/ChatBox'>
                 <Route index element={<ChatBox/>}/>
+                <Route path=':itemId' element={<ItemPage/>}/>
+            </Route>
+            <Route path='/Gemini'>
+                <Route index element={<Gemini/>}/>
                 <Route path=':itemId' element={<ItemPage/>}/>
             </Route>
             <Route path='/*' element={<NotFound/>}/>
