@@ -18,7 +18,6 @@ async function CheckIdToken(req, res, next) {
   if (req.path == "/log-in") return next();
   if (req.path == "/sign-in") return next();
 
-  console.log("Cookies: ", JSON.parse(JSON.stringify(req.cookies)));
 
   // Copys
   writeFileSync(
@@ -54,7 +53,7 @@ async function CheckIdToken(req, res, next) {
       console.log("alg");
     } else if (!keys.includes(header.kid)) {
       valid = false;
-      console.log("kid");
+      console.log("kid", header,keys);
     } else if (!exp) {
       valid = false;
       console.log("exp");

@@ -9,7 +9,7 @@ import Channel from '../pages/Channel/Channel.jsx'
 import Profile from '../pages/Profile/Profile.jsx'
 import Hangman from '../pages/Hangman/Hangman.jsx'
 import Chat from '../pages/Chat/Chat.jsx'
-import ChatBox from '../pages/Chatbox/ChatBox.jsx'
+import Help from '../pages/Help/Help.jsx'
 import Gemini from '../pages/Gemini/Gemini.jsx'
 import ModificaProfilo from '../pages/ModificaProfilo/ModificaProfilo.jsx'
 import { CookiesProvider } from 'react-cookie';
@@ -52,8 +52,8 @@ export default function App() {
                 <Route index element={<Chat/>}/>
                 <Route path=':itemId' element={<ItemPage/>}/>
             </Route>
-            <Route path='/ChatBox'>
-                <Route index element={<ChatBox/>}/>
+            <Route path='/Help'>
+                <Route index element={<Help/>}/>
                 <Route path=':itemId' element={<ItemPage/>}/>
             </Route>
             <Route path='/Gemini'>

@@ -6,21 +6,13 @@ import user from "./models/user.js";
 import bodyParser from "body-parser";
 
 const app = express();
+
+//app.use((req, res, next) => {   console.log(req.path);   return next(); });
+
 app.use(bodyParser.json());
-app.use((req, res, next) => {
-  console.log(req.path);
-  return next();
-});
 
 app.get("/", (req, res) => {
   res.json({ error: "blyat" });
-});
-
-// get unread notices of a user
-app.post("/notices", async (req, res) => {
-  var userID = req.userID;
-  var notices = await db.unreadnotices(userID);
-  res.json(notices);
 });
 
 // get all channels
@@ -35,32 +27,12 @@ app.post("/channels", async (req, res) => {
   }
 });
 
-// get all channels a user joined
-app.post("/joinedchannels", async (req, res) => {});
-
-// get discussions of a channel
-app.post("/discussions", async (req, res) => {});
-
-// get comments of a discussion
-app.post("/comments", async (req, res) => {});
-
 // create new channel
 app.post("/newchannel", async (req, res) => {});
 
-// start new discussion
-app.post("/startdiscussion", async (req, res) => {});
-
-// post comment
-app.post("/postcomment", async (req, res) => {});
-
-// add new unread notice to user
-app.post("/addnotice", async (req, res) => {});
-
-// add new unread notice to user
-app.post("/addnotice", async (req, res) => {});
-
 //get user by firebase id
 app.post("/user", async (req, res) => {
+  console.log(req.body)
   if (!req.body.uid) return res.status(400).json({ error: "missing uid" });
 
   console.log(req.body);

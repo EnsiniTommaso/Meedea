@@ -12,7 +12,7 @@ import assistance from '../assets/assistance.png'
 import assistenza2 from '../assets/assistenza2.png'
 import Profile from '../pages/Profile/Profile.jsx'
 import Hangman from '../pages/Hangman/Hangman.jsx'
-import ChatBox from '../pages/Chatbox/ChatBox.jsx'
+import Help from '../pages/Help/Help.jsx'
 
 export default function NavBar() {
     return (
@@ -48,9 +48,9 @@ export default function NavBar() {
          <NavLink to="/Profile" className="profile-link">
         <img src={profileIcon} alt="Profile" className="profile-icon" />
         </NavLink>
-    <NavLink to="/Chatbox" className="profile-link">
-        <img src={assistance} alt="Chatbox" className="profile-icon" />
-    </NavLink>
+        <NavLink to="/Help" className="profile-link">
+        <img src={assistance} alt="Help" className="profile-icon" />
+        </NavLink>
         </nav>
     );
 }

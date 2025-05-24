@@ -19,9 +19,9 @@ app.use((req, res, next) => {
   return next();
 });
 
-//app.use(cors());
+//app.use(cors({ credentials: true, origin: "http://10.13.0.3:6060" }));
 app.use(auth);
-
+app.use(cors({origin:"*"}))
 console.log("mode:", process.env.MODE);
 
 app.get("/", async (req, res) => {
@@ -36,26 +36,29 @@ app.get("/channels", async (req, res) => {
   if (channels) res.status(200).json(channels);
 });
 
-app.get("/chantest", (req, res) => {
-  res.json([
-    {
-      id: 1,
-      name: "Canale Tech",
-      description: "Questo canale offre contenuti educativi e tutorial.",
-    },
-    {
-      id: 2,
-      name: "Canale Musica",
-      description:
-        "Un canale per gli appassionati di musica e live performance.",
-    },
-    {
-      id: 3,
-      name: "Canale Viaggi",
-      description: "Scopri destinazioni e culture da tutto il mondo.",
-    },
-  ]);
-});
+app.get(
+  "/chantest", (req, res) => {
+    res.set({"Access-Control-Allow-Origin":"http://localhost"})
+    .json([
+      {
+        id: 1,
+        name: "Canale Tech",
+        description: "Questo canale offre contenuti educativi e tutorial.",
+      },
+      {
+        id: 2,
+        name: "Canale Musica",
+        description:
+          "Un canale per gli appassionati di musica e live performance.",
+      },
+      {
+        id: 3,
+        name: "Canale Viaggi",
+        description: "Scopri destinazioni e culture da tutto il mondo.",
+      },
+    ]);
+  }
+);
 
 app.post("/log-in", async (req, res) => {
   var loginres = {};
@@ -68,7 +71,7 @@ app.post("/log-in", async (req, res) => {
   var login;
 
   try {
-    var login = await axios.post(`${process.env.firebase_addr}/log-in`, {
+    login = await axios.post(`${process.env.firebase_addr}/log-in`, {
       email: req.body.email,
       password: req.body.password,
     });
@@ -83,7 +86,7 @@ app.post("/log-in", async (req, res) => {
   loginres["uid"] = login.data["uid"];
 
   try {
-    console.log(loginres.uid);
+    console.log(loginres.uid, `${process.env.database_addr}/user`);
     login = await axios.post(`${process.env.database_addr}/user`, {
       uid: loginres.uid,
     });
@@ -94,7 +97,7 @@ app.post("/log-in", async (req, res) => {
 
   if (login.error) return res.status(400).send({ error: login.error });
   if (!login.data) return res.status(500).json({ error: "user not found" });
-  loginres["user"] = login.data;
+  loginres["user"] = login.data.user;
   console.log("gone well");
   res.json(loginres);
 });
