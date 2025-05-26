@@ -13,6 +13,7 @@ import assistenza2 from '../assets/assistenza2.png'
 import Profile from '../pages/Profile/Profile.jsx'
 import Hangman from '../pages/Hangman/Hangman.jsx'
 import Help from '../pages/Help/Help.jsx'
+import Gemini from '../pages/Gemini/Gemini.jsx'
 
 export default function NavBar() {
     return (
@@ -42,6 +43,11 @@ export default function NavBar() {
                 <li className="nav-item">
                     <NavLink to="/Hangman" className="nav-link" end>
                         Hangman
+                    </NavLink>
+                </li>
+                  <li className="nav-item">
+                    <NavLink to="/Gemini" className="nav-link" end>
+                        AI Gemini
                     </NavLink>
                 </li>
             </ul>

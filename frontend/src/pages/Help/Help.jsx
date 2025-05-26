@@ -28,7 +28,7 @@ const Help = () => {
     const initialMessage = {
       sender: "bot",
       text: `Hai bisogno di aiuto?\n\n${faqOptions
-        .map((q, i) => `${i + 1}. ${q}`)
+        .map((q, i) => `${i + 1} - ${q}`)
         .join("\n")}\n\nDigita il numero corrispondente o scrivi la tua domanda.`
     };
     setMessages([initialMessage]);
@@ -51,7 +51,7 @@ const Help = () => {
 
     try {
       const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyD84smsoBH83XZ4YAY3U6qtG-Xsy8M5SIw",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=YOUR_API_KEY",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -62,10 +62,15 @@ const Help = () => {
       );
 
       const data = await response.json();
-      const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Risposta non disponibile.";
+      const botReply =
+        data.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "Risposta non disponibile.";
       setMessages((prev) => [...prev, { sender: "bot", text: botReply }]);
     } catch (error) {
-      setMessages((prev) => [...prev, { sender: "bot", text: "Errore nel recupero della risposta." }]);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: "Errore nel recupero della risposta." }
+      ]);
     }
   };
 
@@ -81,7 +86,11 @@ const Help = () => {
                 alt="avatar"
                 className="avatar"
               />
-              <div className="message-bubble">{msg.text}</div>
+              <div className="message-bubble">
+                {msg.text.split("\n").map((line, i) => (
+                  <div key={i}>{line}</div>
+                ))}
+              </div>
             </div>
           ))}
         </div>

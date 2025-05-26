@@ -1,43 +1,31 @@
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../../components/Layout";
-import { useEffect, useState } from "react";
 import socket from "../../socket";
-import './Chat.css';
+import "./Chat.css";
 
-function Chat() {
+const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [roomId, setRoomId] = useState("");
   const [roomText, setRoomText] = useState("");
   const [name, setName] = useState("");
   const [inputMessage, setInputMessage] = useState("");
+  const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleSendMessage = () => {
-    if (inputMessage.trim()) {
-      // Creiamo il messaggio da inviare
-      const newMessage = { name, message: inputMessage };
-      
-      // Emettiamo il messaggio al server senza aggiungerlo ancora localmente
-      socket.emit("messageRoom", { room: roomId, message: newMessage });
+  const chatEndRef = useRef(null);
 
-      // Pulisci il campo di input
-      setInputMessage("");
+  useEffect(() => {
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  };
-
-  const handleRoomJoin = () => {
-    if (!roomText || !name) {
-      alert("Inserisci nome e ID della stanza");
-      return;
-    }
-
-    socket.emit("join", { room: roomText, name });
-    setRoomId(roomText);
-  };
+  }, [messages]);
 
   useEffect(() => {
     socket.on("message", (msg) => {
-      console.log("💬 Messaggio ricevuto:", msg);
-      
-      // Aggiungiamo solo i messaggi ricevuti dal server
+      setMessages((prev) => [...prev, msg]);
+    });
+
+    socket.on("file", (msg) => {
       setMessages((prev) => [...prev, msg]);
     });
 
@@ -51,78 +39,203 @@ function Chat() {
 
     return () => {
       socket.off("message");
+      socket.off("file");
       socket.off("notification");
     };
   }, []);
 
+  const handleSendMessage = () => {
+    if (inputMessage.trim()) {
+      const newMessage = { name, message: inputMessage };
+      socket.emit("messageRoom", { room: roomId, message: newMessage });
+      setInputMessage("");
+    }
+  };
+
+  const handleRoomJoin = () => {
+    if (!roomText || !name) {
+      alert("Inserisci nome e ID della stanza");
+      return;
+    }
+    socket.emit("join", { room: roomText, name });
+    setRoomId(roomText);
+  };
+
+  const handleFileSelect = (e, fileType) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result;
+        setSelectedFile({
+          name: file.name,
+          type: fileType,
+          content: base64,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSendFile = () => {
+    if (selectedFile) {
+      const fileMessage = {
+        name,
+        file: selectedFile,
+      };
+      socket.emit("file", { room: roomId, message: fileMessage });
+      setSelectedFile(null);
+      setShowAttachmentMenu(false);
+    }
+  };
+
+  const handleCancelFile = () => {
+    setSelectedFile(null);
+  };
+
   return (
     <Layout>
-      <header>
-        Chat
-      </header>
-      <div className="App">
-        {roomId ? (
-          <div className="chat-header">
-           <h2>  Welcome, {name}!</h2> 
-            
-          </div>
-        ) : null}
+      <div className="min-h-screen p-6 bg-gray-100 flex flex-col items-center">
+        <header>
+          <h1>Chat Room</h1>
+        </header>
+      </div>
 
-        {roomId === "" ? (
+      <div className="help-container">
+        {!roomId ? (
           <div className="room-container">
-            <h1>Join Chat Room</h1>
-            <div className="room-options">
-              <input
-                className="room-input"
-                type="text"
-                placeholder="Enter your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                className="room-input"
-                type="text"
-                placeholder="Enter Room ID"
-                value={roomText}
-                onChange={(e) => setRoomText(e.target.value)}
-              />
-              <button onClick={handleRoomJoin} className="room-button">
-                Join Room
-              </button>
-            </div>
+            <h3>Unisciti alla stanza</h3>
+            <input
+              className="help-chat-input-field"
+              type="text"
+              placeholder="Il tuo nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              className="help-chat-input-field"
+              type="text"
+              placeholder="ID stanza"
+              value={roomText}
+              onChange={(e) => setRoomText(e.target.value)}
+            />
+            <button className="help-chat-button" onClick={handleRoomJoin}>
+              Unisciti
+            </button>
           </div>
         ) : (
-          <div className="message-area">
-            <div className="message-list-container">
-              <ul className="message-list">
-                {messages.map((msg, idx) => (
-                  <li
-                    key={idx}
-                    className={`message-item ${msg.name === name ? "self" : "other"}`}
-                  >
-                    <span className="message-author">{msg.name}:</span>
-                    <span className="message-content">{msg.message}</span>
-                  </li>
-                ))}
-              </ul>
+          <>
+            <div className="help-chat-box">
+              {messages.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={`chat-message ${
+                    msg.name === name ? "user" : "bot"
+                  }`}
+                >
+                  <div className="message-bubble">
+                    <strong>{msg.name}:</strong>{" "}
+                    {msg.file ? (
+                      msg.file.type === "image" ? (
+                        <img
+                          src={msg.file.content}
+                          alt={msg.file.name}
+                          className="chat-image"
+                          style={{ maxWidth: "200px", borderRadius: "12px" }}
+                        />
+                      ) : (
+                        <a
+                          href={msg.file.content}
+                          download={msg.file.name}
+                          className="chat-file-link"
+                        >
+                          📎 {msg.file.name}
+                        </a>
+                      )
+                    ) : (
+                      msg.message
+                    )}
+                  </div>
+                </div>
+              ))}
+              <div ref={chatEndRef} />
             </div>
-            <div className="message-input-container">
+
+            <div className="help-chat-input">
               <input
-                className="message-input"
                 type="text"
-                placeholder="Type your message..."
+                placeholder="Scrivi qui..."
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
               />
-              <button onClick={handleSendMessage} className="send-button">
-                Send
+              <button
+                className="help-chat-button"
+                onClick={() => setShowAttachmentMenu(!showAttachmentMenu)}
+                type="button"
+              >
+                +
+              </button>
+              <button
+                className="help-chat-button"
+                onClick={handleSendMessage}
+                type="button"
+              >
+                Invia
               </button>
             </div>
-          </div>
+
+            {showAttachmentMenu && (
+              <div className="attach-options">
+                <label>
+                  📷 Foto
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={(e) => handleFileSelect(e, "image")}
+                  />
+                </label>
+                <label>
+                  📄 Documento
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.txt,.xls,.xlsx,.ppt,.pptx"
+                    hidden
+                    onChange={(e) => handleFileSelect(e, "document")}
+                  />
+                </label>
+              </div>
+            )}
+
+            {selectedFile && (
+              <div className="file-preview">
+                <h4>Anteprima allegato:</h4>
+                {selectedFile.type === "image" ? (
+                  <img
+                    src={selectedFile.content}
+                    alt={selectedFile.name}
+                    className="chat-image"
+                    style={{ maxWidth: "200px", marginBottom: "10px" }}
+                  />
+                ) : (
+                  <p>📎 {selectedFile.name}</p>
+                )}
+                <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                  <button className="help-chat-button" onClick={handleSendFile}>
+                    Invia allegato
+                  </button>
+                  <button className="help-chat-button" onClick={handleCancelFile}>
+                    Annulla
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </Layout>
   );
-}
+};
 
 export default Chat;
