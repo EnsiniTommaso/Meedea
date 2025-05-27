@@ -19,9 +19,20 @@ app.use((req, res, next) => {
   return next();
 });
 
+app.use(cors({ origin: "*" }));
+app.use( (req, res, next)=> {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+})
+
 //app.use(cors({ credentials: true, origin: "http://10.13.0.3:6060" }));
-app.use(auth);
-app.use(cors({origin:"*"}))
+//app.use(auth);
+//app.use(cors({origin:"*"}))
 console.log("mode:", process.env.MODE);
 
 app.get("/", async (req, res) => {
