@@ -11,15 +11,8 @@ const ModificaProfilo = () => {
 
   const [formData, setFormData] = useState(() => {
     const datiSalvati = localStorage.getItem('profiloUtente');
-    return datiSalvati
-      ? JSON.parse(datiSalvati)
-      : {
-          nome: 'Giovanni Rossi',
-          email: 'giovanni.rossi@example.com',
-          eta: 30,
-          citta: 'Roma',
-          telefono: '+39 123 456 789'
-        };
+    return JSON.parse(datiSalvati)
+      
   });
   const [cookies, setCookie] = useCookies(['id_token', 'uid'])
 
@@ -58,7 +51,7 @@ const ModificaProfilo = () => {
         <form onSubmit={handleSubmit} className="modifica-form">
           <label>
             Nome:
-            <input type="text" name="nome" value={formData.nome} onChange={handleChange} required />
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required />
           </label>
           <label>
             Età:

@@ -23,7 +23,7 @@ const Profile = () => {
         const response = await axios.post('/user', {uid:cookies.uid} , { headers:{'id_token':cookies.id_token, 'uid':cookies.uid,'Access-Control-Allow-Origin': '*',} })
         console.log('res:', response)
         setProfilo(response.data)
-        
+        localStorage.setItem('profiloUtente', JSON.stringify(response.data))
         return response
       }catch(err){console.error(err)}
     }

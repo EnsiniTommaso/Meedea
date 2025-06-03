@@ -10,10 +10,10 @@ const app = express();
 //app.use((req, res, next) => {   console.log(req.path);   return next(); });
 
 app.use(bodyParser.json());
-app.use((req,res,next)=>{
-  console.log(req.path)
-  return next()
-})
+app.use((req, res, next) => {
+  console.log(req.path);
+  return next();
+});
 app.get("/", (req, res) => {
   res.json({ error: "blyat" });
 });
@@ -35,8 +35,7 @@ app.post("/newchannel", async (req, res) => {});
 
 //get user by firebase id
 app.post("/user", async (req, res) => {
-
-  console.log(req.body)
+  console.log(req.body);
 
   if (!req.body.uid) return res.status(400).json({ error: "missing uid" });
 
@@ -57,6 +56,21 @@ app.post("/newuser", async (req, res) => {
   var answ = await db.newuser(req.body.name, req.body.email, req.body.uid);
   console.log("created successfully\n\n", answ);
   res.json({ user: answ });
+});
+
+app.post("/updateuser", async (req, res) => {
+  console.log(req.body);
+
+  if (!req.body.data) return res.status(400);
+  if (!req.body.uid) return res.status(400);
+  try {
+    var resp = await db.updateUser(req.body.uid, req.body.data);
+
+    return res.json(resp);
+  } catch (err) {
+    console.log(err);
+    return res.status(500);
+  }
 });
 
 app.listen(process.env.PORT, "0.0.0.0", async (req, res) =>

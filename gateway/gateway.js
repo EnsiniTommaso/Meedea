@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cors({ origin: "*" }));
-app.use( (req, res, next)=> {
+app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -28,7 +28,7 @@ app.use( (req, res, next)=> {
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
-})
+});
 
 console.log("mode:", process.env.MODE);
 
@@ -37,13 +37,11 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/user", async (req, res) => {
-  
-  var uid =req.body.uid;
+  var uid = req.body.uid;
 
   //res.set({ "Access-Control-Allow-Origin": "http://localhost" });
 
-  
-  console.log(uid)
+  console.log(uid);
 
   if (!uid) return res.status(400);
 
@@ -51,22 +49,24 @@ app.post("/user", async (req, res) => {
     var user = await axios.post(`${process.env.database_addr}/user`, {
       uid: uid,
     });
-    console.log(user.data)
+    console.log(user.data);
     res.json(user.data.user);
   } catch (err) {
     console.log(err);
   }
-
-  
-  
 });
 
-app.post('/updateuser', async (req,res)=>{
-  console.log(req.body)
+app.post("/updateuser", async (req, res) => {
+  console.log(req.body);
 
-   var channels = await axios.post(`${process.env.database_addr}/channels`);
+  if (!req.body.data) return res.status(400);
+  if (!req.body.uid) return res.status(400);
 
-})
+  var user = await axios.post(
+    `${process.env.database_addr}/updateuser`,
+    req.body
+  );
+});
 
 app.get("/channels", async (req, res) => {
   if (!user_id) return res.status(400).send("missing user-db-id");
@@ -76,29 +76,26 @@ app.get("/channels", async (req, res) => {
   if (channels) res.status(200).json(channels);
 });
 
-app.get(
-  "/chantest", (req, res) => {
-    res.set({"Access-Control-Allow-Origin":"http://localhost"})
-    .json([
-      {
-        id: 1,
-        name: "Canale Tech",
-        description: "Questo canale offre contenuti educativi e tutorial.",
-      },
-      {
-        id: 2,
-        name: "Canale Musica",
-        description:
-          "Un canale per gli appassionati di musica e live performance.",
-      },
-      {
-        id: 3,
-        name: "Canale Viaggi",
-        description: "Scopri destinazioni e culture da tutto il mondo.",
-      },
-    ]);
-  }
-);
+app.get("/chantest", (req, res) => {
+  res.set({ "Access-Control-Allow-Origin": "http://localhost" }).json([
+    {
+      id: 1,
+      name: "Canale Tech",
+      description: "Questo canale offre contenuti educativi e tutorial.",
+    },
+    {
+      id: 2,
+      name: "Canale Musica",
+      description:
+        "Un canale per gli appassionati di musica e live performance.",
+    },
+    {
+      id: 3,
+      name: "Canale Viaggi",
+      description: "Scopri destinazioni e culture da tutto il mondo.",
+    },
+  ]);
+});
 
 app.post("/log-in", async (req, res) => {
   var loginres = {};

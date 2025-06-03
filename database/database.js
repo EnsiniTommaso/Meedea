@@ -119,7 +119,15 @@ export async function userByFbUid(fbUid) {
   return res[0];
 }
 
-export async function updateUser(fbUid, data)
-{
-  user.findOneAndUpdate({ fbUid: fbUid },data)
+export async function updateUser(fbUid, data) {
+
+  var res = await user.find({ fbUid: fbUid });
+
+  if (res) console.log('we have it!', res[0])
+
+  res = await user.findOneAndUpdate({ fbUid: fbUid }, data);
+  
+  console.log('res: ')
+
+  return res[0];
 }
