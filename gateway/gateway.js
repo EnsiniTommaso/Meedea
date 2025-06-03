@@ -30,14 +30,43 @@ app.use( (req, res, next)=> {
   next();
 })
 
-//app.use(cors({ credentials: true, origin: "http://10.13.0.3:6060" }));
-//app.use(auth);
-//app.use(cors({origin:"*"}))
 console.log("mode:", process.env.MODE);
 
 app.get("/", async (req, res) => {
   res.status("404");
 });
+
+app.post("/user", async (req, res) => {
+  
+  var uid =req.body.uid;
+
+  //res.set({ "Access-Control-Allow-Origin": "http://localhost" });
+
+  
+  console.log(uid)
+
+  if (!uid) return res.status(400);
+
+  try {
+    var user = await axios.post(`${process.env.database_addr}/user`, {
+      uid: uid,
+    });
+    console.log(user.data)
+    res.json(user.data.user);
+  } catch (err) {
+    console.log(err);
+  }
+
+  
+  
+});
+
+app.post('/updateuser', async (req,res)=>{
+  console.log(req.body)
+
+   var channels = await axios.post(`${process.env.database_addr}/channels`);
+
+})
 
 app.get("/channels", async (req, res) => {
   if (!user_id) return res.status(400).send("missing user-db-id");

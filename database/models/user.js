@@ -6,5 +6,8 @@ const user = new Schema({
   name: String,
   email: String,
   joinedchannelsIDs: [String],
+  eta:Number,
+  citta:String,
+  telefono:String
 });
 export default mongoose.model("user", user);

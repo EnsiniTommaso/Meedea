@@ -10,7 +10,10 @@ const app = express();
 //app.use((req, res, next) => {   console.log(req.path);   return next(); });
 
 app.use(bodyParser.json());
-
+app.use((req,res,next)=>{
+  console.log(req.path)
+  return next()
+})
 app.get("/", (req, res) => {
   res.json({ error: "blyat" });
 });
@@ -32,7 +35,9 @@ app.post("/newchannel", async (req, res) => {});
 
 //get user by firebase id
 app.post("/user", async (req, res) => {
+
   console.log(req.body)
+
   if (!req.body.uid) return res.status(400).json({ error: "missing uid" });
 
   console.log(req.body);

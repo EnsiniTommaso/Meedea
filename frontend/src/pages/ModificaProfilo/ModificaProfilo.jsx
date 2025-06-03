@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import './ModificaProfilo.css';
-
+import axios from '../../axios.js';
+import { useCookies } from 'react-cookie';
+  
 const ModificaProfilo = () => {
   const navigate = useNavigate();
 
@@ -19,18 +21,19 @@ const ModificaProfilo = () => {
           telefono: '+39 123 456 789'
         };
   });
+  const [cookies, setCookie] = useCookies(['id_token', 'uid'])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const conferma = window.confirm("Confermi che i dati inseriti vanno bene?");
     if (conferma) {
-      localStorage.setItem('profiloUtente', JSON.stringify(formData));
-      alert("Profilo aggiornato!");
+      const response = await axios.post('/updateuser', {uid:cookies.uid, data:formData} , { headers:{'id_token':cookies.id_token, 'uid':cookies.uid,'Access-Control-Allow-Origin': '*',} })
+      console.log('res:', response)
       navigate('../Profile');
     }
   };
@@ -56,10 +59,6 @@ const ModificaProfilo = () => {
           <label>
             Nome:
             <input type="text" name="nome" value={formData.nome} onChange={handleChange} required />
-          </label>
-          <label>
-            Email:
-            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
           </label>
           <label>
             Età:

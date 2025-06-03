@@ -3,22 +3,32 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import './Profile.css';
+import axios from '../../axios.js';
+import { useCookies } from 'react-cookie';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['id_token', 'uid'])
   const [profilo, setProfilo] = useState({
-    nome: 'Giovanni Rossi',
-    email: 'giovanni.rossi@example.com',
-    eta: 30,
-    citta: 'Roma',
-    telefono: '+39 123 456 789'
+    nome: 'Not Logged In',
+    email: '-',
+    eta: 0,
+    citta: '-',
+    telefono: '-'
   });
 
   useEffect(() => {
-    const datiSalvati = localStorage.getItem('profiloUtente');
-    if (datiSalvati) {
-      setProfilo(JSON.parse(datiSalvati));
+    async function fetchProfile() {
+      try{
+        const response = await axios.post('/user', {uid:cookies.uid} , { headers:{'id_token':cookies.id_token, 'uid':cookies.uid,'Access-Control-Allow-Origin': '*',} })
+        console.log('res:', response)
+        setProfilo(response.data)
+        
+        return response
+      }catch(err){console.error(err)}
     }
+
+    fetchProfile()
   }, []);
 
   const handleModify = () => {
@@ -45,7 +55,7 @@ const Profile = () => {
             <tbody>
               <tr>
                 <td><strong>Nome</strong></td>
-                <td>{profilo.nome}</td>
+                <td>{profilo.name}</td>
               </tr>
               <tr>
                 <td><strong>Email</strong></td>
